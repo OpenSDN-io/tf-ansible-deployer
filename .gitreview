@@ -1,5 +1,5 @@
 [gerrit]
 host=gerrit.opensdn.io
 port=29418
-project=tungstenfabric/tf-ansible-deployer.git
+project=opensdn-io/tf-ansible-deployer.git
 defaultbranch=master
