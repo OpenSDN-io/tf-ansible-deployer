@@ -49,7 +49,7 @@ pip install ansible==2.7.18
 Next, clone the tf-ansible-deployer repo and populate the configuration:
 
 ```
-git clone https://github.com/tungstenfabric/tf-ansible-deployer
+git clone https://github.com/opensdn-io/tf-ansible-deployer
 cd tf-ansible-deployer
 > config/instances.yaml
 vi config/instances.yaml

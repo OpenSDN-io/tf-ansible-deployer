@@ -3,7 +3,7 @@ This example creates, configures and installs  6 GCE instances. The first 3 inst
 are configured as control plane nodes and the remaining 3 as data plane nodes.    
 The provider_config.gce parameters must be adjusted!     
 ```
-git clone http://github.com/tungstenfabric/tf-ansible-deployer
+git clone http://github.com/opensdn-io/tf-ansible-deployer
 cd tf-ansible-deployer
 cat << EOF > config/instances.yaml
 provider_config:

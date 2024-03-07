@@ -12,10 +12,8 @@ ssh-copy-id 192.168.1.100
 #chmod +x ./get-pip.py
 #./get-pip.py
 pip install ansible==2.7.18
-#For Contrail R5.0 use 
-git clone -b R5.0 http://github.com/tungstenfabric/tf-ansible-deployer
 #For master branch use
-git clone http://github.com/tungstenfabric/tf-ansible-deployer
+git clone http://github.com/opensdn-io/tf-ansible-deployer
 cd tf-ansible-deployer
 ansible-playbook -i inventory/ -e orchestrator=kubernetes -e '{"instances":{"bms1":{"ip":"192.168.1.100","provider":"bms"}}}' playbooks/configure_instances.yml
 ansible-playbook -i inventory/ -e orchestrator=kubernetes -e '{"instances":{"bms1":{"ip":"192.168.1.100","provider":"bms"}}}' playbooks/install_contrail.yml
@@ -90,7 +88,7 @@ Please note that the below components in analytics are optional
   zookeeper
 ```
 
-Please check [Optional Contrail Analytics Components](https://github.com/tungstgenfabric/tf-ansible-deployer/blob/master/README.md#optional-contrail-analytics-components
+Please check [Optional Contrail Analytics Components](https://github.com/opensdn-io/tf-ansible-deployer/blob/master/README.md#optional-contrail-analytics-components
 
 ## Prerequisites
 
@@ -109,10 +107,10 @@ Please check [Optional Contrail Analytics Components](https://github.com/tungstg
 
 ```
 #For Contrail R5.0 use 
-git clone -b R5.0 http://github.com/tungstenfabric/tf-ansible-deployer
+git clone -b R5.0 http://github.com/opensdn-io/tf-ansible-deployer
 
 #For master branch use
-git clone http://github.com/tungstenfabric/tf-ansible-deployer
+git clone http://github.com/opensdn-io/tf-ansible-deployer
 ```
 
 ### Providers

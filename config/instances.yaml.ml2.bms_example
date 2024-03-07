@@ -34,7 +34,7 @@ instances:
       openstack_compute:
 
 global_configuration:
-  CONTAINER_REGISTRY: tungstenfabric
+  CONTAINER_REGISTRY: opensdn
 
 contrail_configuration:
   CONTRAIL_VERSION: latest
