@@ -14,7 +14,7 @@
   when: not kolla_dir_stat.stat.exists or force_clone|bool
 
 - name: Choosing openstack branch
-  shell: "git checkout contrail/{{ openstack_sku }}"
+  shell: "git checkout opensdn/{{ openstack_sku }}"
   args:
     chdir: "{{ kolla_dir }}"
   when: not skip_checkout|bool
