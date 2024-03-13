@@ -13,8 +13,8 @@
   yum_repository:
     name: Kubernetes
     description: k8s repo
-    baseurl: https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64
-    gpgkey: https://packages.cloud.google.com/yum/doc/yum-key.gpg https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
+    baseurl: https://pkgs.k8s.io/core:/stable:/v1.24/rpm/ 
+    gpgkey: https://pkgs.k8s.io/core:/stable:/v1.24/rpm/repodata/repomd.xml.key
     repo_gpgcheck: "{{ global_configuration.K8S_YUM_REPO_GPGCHECK | default('no') }}"
     gpgcheck: "{{ global_configuration.K8S_YUM_REPO_GPGCHECK | default('no') }}"
   when: k8s_package_version is defined and global_configuration.K8S_YUM_REPO_URL is not defined
