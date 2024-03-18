@@ -62,6 +62,9 @@
   retries: 5
   until: res is success
 
+- name: generate config.toml
+  shell: "containerd config default > config.toml ; sed -i 's/SystemdCgroup = false/SystemdCgroup = true/g' config.toml ; sudo mv config.toml /etc/containerd/config.toml ; sudo systemctl restart containerd "
+
 - name: configure k8s master
   include: configure_k8s_master_node.yml
   when: roles[instance_name].k8s_master is defined and k8s_master_name is defined and inventory_hostname == k8s_master_name

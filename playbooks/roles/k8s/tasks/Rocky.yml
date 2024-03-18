@@ -13,7 +13,7 @@
   yum_repository:
     name: Kubernetes
     description: k8s repo
-    baseurl: https://pkgs.k8s.io/core:/stable:/v1.24/rpm/ 
+    baseurl: https://pkgs.k8s.io/core:/stable:/v1.24/rpm/
     gpgkey: https://pkgs.k8s.io/core:/stable:/v1.24/rpm/repodata/repomd.xml.key
     repo_gpgcheck: "{{ global_configuration.K8S_YUM_REPO_GPGCHECK | default('no') }}"
     gpgcheck: "{{ global_configuration.K8S_YUM_REPO_GPGCHECK | default('no') }}"
