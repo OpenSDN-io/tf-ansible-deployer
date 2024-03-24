@@ -24,6 +24,9 @@
 {% endfor %}
 {% endfor %}
 
+[deployment]
+localhost       ansible_connection=local
+
 # When compute nodes and control nodes use different interfaces,
 # you can specify "api_interface" and other interfaces like below:
 #compute01 neutron_external_interface=eth0 api_interface=em1 storage_interface=em1 tunnel_interface=em1
@@ -37,6 +40,14 @@ monitoring
 
 # You can explicitly specify which hosts run each project by updating the
 # groups in the sections below. Common services are grouped together.
+
+[common:children]
+control
+network
+compute
+storage
+monitoring
+
 [chrony-server:children]
 control
 
@@ -50,19 +61,13 @@ monitoring
 [collectd:children]
 compute
 
+[tls-backend:children]
+control
+
 [grafana:children]
 monitoring
 
 [etcd:children]
-control
-
-[influxdb:children]
-monitoring
-
-[prometheus:children]
-monitoring
-
-[kafka:children]
 control
 
 [karbor:children]
@@ -78,21 +83,20 @@ monitoring
 network
 storage
 
+[hacluster:children]
+control
+
+[hacluster-remote:children]
+compute
+
+[loadbalancer:children]
+network
+
 [elasticsearch:children]
 control
 
 [haproxy:children]
 network
-
-[hyperv]
-#hyperv_host
-
-[hyperv:vars]
-#ansible_user=user
-#ansible_password=password
-#ansible_port=5986
-#ansible_connection=winrm
-#ansible_winrm_server_cert_validation=ignore
 
 [mariadb:children]
 control
@@ -103,23 +107,7 @@ control
 [outward-rabbitmq:children]
 control
 
-[qdrouterd:children]
-control
-
-[monasca-agent:children]
-compute
-control
-monitoring
-network
-storage
-
-[monasca:children]
-monitoring
-
-[storm:children]
-monitoring
-
-mongodb:children]
+[mongodb:children]
 control
 
 [keystone:children]
@@ -169,28 +157,31 @@ control
 [murano:children]
 control
 
-[solum:children]
-control
-
 [ironic:children]
 control
 
-[ceph:children]
-control
+[influxdb:children]
+monitoring
+
+[prometheus:children]
+monitoring
 
 [magnum:children]
 control
 
-[qinling:children]
+[sahara:children]
 control
 
-[sahara:children]
+[solum:children]
 control
 
 [mistral:children]
 control
 
 [manila:children]
+control
+
+[gnocchi:children]
 control
 
 [ceilometer:children]
@@ -209,26 +200,16 @@ control
 [panko:children]
 control
 
-[gnocchi:children]
-control
-
 [tacker:children]
 control
 
-[trove:children]
-control
-
-# Tempest
-[tempest:children]
+[vitrage:children]
 control
 
 [senlin:children]
 control
 
-[vmtp:children]
-control
-
-[vitrage:children]
+[trove:children]
 control
 
 [watcher:children]
@@ -267,12 +248,38 @@ control
 [blazar:children]
 control
 
+[venus:children]
+monitoring
+
+[letsencrypt:children]
+loadbalancer
+
 # Additional control implemented here. These groups allow you to control which
 # services run on which hosts at a per-service level.
 #
 # Word of caution: Some services are required to run on the same host to
 # function appropriately. For example, neutron-metadata-agent must run on the
 # same host as the l3-agent and (depending on configuration) the dhcp-agent.
+
+# Common
+[cron:children]
+common
+
+[fluentd:children]
+common
+
+[kolla-logs:children]
+common
+
+[kolla-toolbox:children]
+common
+
+[opensearch:children]
+control
+
+# Opensearch dashboards
+[opensearch-dashboards:children]
+opensearch
 
 # Glance
 [glance-api:children]
@@ -322,6 +329,13 @@ neutron
 [neutron-metadata-agent:children]
 neutron
 
+[neutron-ovn-metadata-agent:children]
+compute
+network
+
+[neutron-ovn-agent:children]
+compute
+
 [neutron-bgp-dragent:children]
 neutron
 
@@ -339,6 +353,9 @@ neutron
 
 [ironic-neutron-agent:children]
 neutron
+
+[ceph:children]
+control
 
 # Ceph
 [ceph-mds:children]
@@ -442,6 +459,16 @@ barbican
 [barbican-worker:children]
 barbican
 
+# Trove
+[trove-api:children]
+trove
+
+[trove-conductor:children]
+trove
+
+[trove-taskmanager:children]
+trove
+
 # Heat
 [heat-api:children]
 heat
@@ -459,50 +486,6 @@ murano
 [murano-engine:children]
 murano
 
-# Monasca
-[monasca-agent-collector:children]
-monasca-agent
-
-[monasca-agent-forwarder:children]
-monasca-agent
-
-[monasca-agent-statsd:children]
-monasca-agent
-
-[monasca-api:children]
-monasca
-
-[monasca-grafana:children]
-monasca
-
-[monasca-log-api:children]
-monasca
-
-[monasca-log-transformer:children]
-monasca
-
-[monasca-log-persister:children]
-monasca
-
-[monasca-log-metrics:children]
-monasca
-
-[monasca-thresh:children]
-monasca
-
-[monasca-notification:children]
-monasca
-
-[monasca-persister:children]
-monasca
-
-# Storm
-[storm-worker:children]
-storm
-
-[storm-nimbus:children]
-storm
-
 # Ironic
 [ironic-api:children]
 ironic
@@ -519,26 +502,18 @@ ironic
 [ironic-ipxe:children]
 ironic
 
+[ironic-tftp:children]
+ironic
+
+[ironic-http:children]
+ironic
+
 # Magnum
 [magnum-api:children]
 magnum
 
 [magnum-conductor:children]
 magnum
-
-# Qinling
-[qinling-api:children]
-qinling
-
-[qinling-engine:children]
-qinling
-
-# Sahara
-[sahara-api:children]
-sahara
-
-[sahara-engine:children]
-sahara
 
 # Solum
 [solum-api:children]
@@ -571,25 +546,6 @@ mistral
 
 [mistral-event-engine:children]
 mistral
-
-# Ceilometer
-[ceilometer-api:children]
-ceilometer
-
-[ceilometer-central:children]
-ceilometer
-
-[ceilometer-notification:children]
-ceilometer
-
-[ceilometer-collector:children]
-ceilometer
-
-[ceilometer-compute:children]
-compute
-
-[ceilometer-ipmi:children]
-compute
 
 # Aodh
 [aodh-api:children]
@@ -638,15 +594,25 @@ gnocchi
 [gnocchi-metricd:children]
 gnocchi
 
-# Trove
-[trove-api:children]
-trove
+# Sahara
+[sahara-api:children]
+sahara
 
-[trove-conductor:children]
-trove
+[sahara-engine:children]
+sahara
 
-[trove-taskmanager:children]
-trove
+# Ceilometer
+[ceilometer-central:children]
+ceilometer
+
+[ceilometer-notification:children]
+ceilometer
+
+[ceilometer-compute:children]
+compute
+
+[ceilometer-ipmi:children]
+compute
 
 # Multipathd
 [multipathd:children]
@@ -805,3 +771,38 @@ control
 
 [masakari-monitors:children]
 compute
+
+[ovn-controller:children]
+ovn-controller-compute
+ovn-controller-network
+
+[ovn-controller-compute:children]
+compute
+
+[ovn-controller-network:children]
+network
+
+[ovn-database:children]
+control
+
+[ovn-northd:children]
+ovn-database
+
+[ovn-nb-db:children]
+ovn-database
+
+[ovn-sb-db:children]
+ovn-database
+
+[venus-api:children]
+venus
+
+[venus-manager:children]
+venus
+
+[letsencrypt-webserver:children]
+letsencrypt
+
+[letsencrypt-lego:children]
+letsencrypt
+
