@@ -1,0 +1,19 @@
+[APISERVER]
+api_server_port = {{ opencontrail_api_server_port }}
+api_server_ip = {{ opencontrail_api_server_ip }}
+multi_tenancy = True
+contrail_extensions = ipam:neutron_plugin_contrail.plugins.opencontrail.contrail_plugin_ipam.NeutronPluginContrailIpam,policy:neutron_plugin_contrail.plugins.opencontrail.contrail_plugin_policy.NeutronPluginContrailPolicy,route-table:neutron_plugin_contrail.plugins.opencontrail.contrail_plugin_vpc.NeutronPluginContrailVpc,contrail:None,service-interface:None,vf-binding:None
+
+[COLLECTOR]
+analytics_api_ip = {{ opencontrail_collector_ip.split(' ')[0] }}
+analytics_api_port = {{ opencontrail_collector_port }}
+
+[keystone_authtoken]
+auth_host = {{ opencontrail_api_server_ip }}
+auth_port = {{ contrail_plugin_keystone_port }}
+auth_protocol = '{{ contrail_plugin_internal_protocol }}'
+admin_user = admin
+admin_password = contrail123
+admin_tenant_name = admin
+insecure = True
+region_name = RegionOne

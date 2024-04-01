@@ -1,0 +1,18 @@
+---
+
+- name: Generate ContrailPlugin.ini from Jinja2 template
+  become: true
+  template:
+    src: "{{ role_path }}/templates/ContrailPlugin.ini.j2"
+    dest: "{{ role_path }}/files/ContrailPlugin.ini"
+    mode: "0664"
+  register: contrailplugin_ini
+
+- name: Copy neutron_server config script to all hosts
+  copy:
+    src: "{{ role_path }}/files/"
+    dest: "/tmp/"
+    mode: 0755
+
+- name: Execute neutron_server config script
+  command: "/tmp/config_opensdn.sh"

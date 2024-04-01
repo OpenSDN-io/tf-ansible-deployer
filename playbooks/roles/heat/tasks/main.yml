@@ -1,0 +1,10 @@
+---
+
+- name: run heat_engine init container
+  include: init_opensdn.yml
+
+- name: config heat_engine container
+  include: config_opensdn.yml
+
+- name: restart containers
+  include: restart_containers.yml

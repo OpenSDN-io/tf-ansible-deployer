@@ -1,4 +1,8 @@
 ---
+- name: Set kolla directory based on kolla installation mode
+  set_fact:
+    kolla_dir: "{{ vanilla_kolla_dir if kolla_mode == 'vanilla' else contrail_kolla_dir }}"
+
 - name: set instance data
   set_fact:
     instance_data: "{{ instances[hostvars[inventory_hostname].instance_name] }}"

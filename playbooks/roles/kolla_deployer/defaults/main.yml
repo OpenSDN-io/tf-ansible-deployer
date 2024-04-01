@@ -1,7 +1,7 @@
 ---
 
 kolla_config: {}
-default_openstack_sku: queens
+default_openstack_sku: "unmaintained/yoga"
 openstack_sku: >-
     {%- if contrail_configuration.OPENSTACK_VERSION is defined -%}
       {{ contrail_configuration.OPENSTACK_VERSION }}
@@ -11,7 +11,14 @@ openstack_sku: >-
       {{ default_openstack_sku }}
     {%- endif -%}
 
-kolla_dir: "{{ playbook_dir }}/../../contrail-kolla-ansible"
+contrail_kolla_dir: "{{ playbook_dir }}/../../contrail-kolla-ansible"
+vanilla_kolla_dir: "{{ playbook_dir}}/../../kolla-ansible"
+kolla_mode: >-
+    {%- if contrail_configuration.KOLLA_MODE is defined -%}
+      {{ contrail_configuration.KOLLA_MODE }}
+    {%- else -%}
+      {{ 'patched' }}
+    {%- endif -%}
 force_clone: >-
     {%- if kolla_config.kolla_globals is defined and kolla_config.kolla_globals.force_clone is defined -%}
       {{ kolla_config.kolla_globals.force_clone }}

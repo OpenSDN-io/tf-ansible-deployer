@@ -1,4 +1,8 @@
 ---
+- name: Set kolla directory based on kolla installation mode
+  set_fact:
+    kolla_dir: "{{ vanilla_kolla_dir if kolla_mode == 'vanilla' else contrail_kolla_dir }}"
+
 - name: Check openstack repo is present
   stat:
     path: "{{ kolla_dir }}"
@@ -11,13 +15,37 @@
     force: "{{ force_clone }}"
   ignore_errors: yes
   register: kolla_repo
-  when: not kolla_dir_stat.stat.exists or force_clone|bool
+  when:
+    - not kolla_dir_stat.stat.exists or force_clone|bool
+    - kolla_mode is undefined or kolla_mode != 'vanilla'
+
+- name: Clone vanilla openstack git repo
+  git:
+    repo: https://github.com/openstack/kolla-ansible.git
+    dest: "{{ kolla_dir }}"
+    force: "{{ force_clone }}"
+  ignore_errors: yes
+  register: kolla_repo
+  when:
+    - kolla_mode is defined
+    - kolla_mode == 'vanilla'
 
 - name: Choosing openstack branch
   shell: "git checkout opensdn/{{ openstack_sku }}"
   args:
     chdir: "{{ kolla_dir }}"
-  when: not skip_checkout|bool
+  when:
+    - not skip_checkout|bool
+    - kolla_mode is undefined or kolla_mode != 'vanilla'
+
+- name: Choosing vanilla openstack branch
+  shell: "git checkout unmaintained/yoga"
+  args:
+    chdir: "{{ kolla_dir }}"
+  when:
+    - not skip_checkout|bool
+    - kolla_mode is defined
+    - kolla_mode == 'vanilla'
 
 - name: Create configs customization dir
   file:

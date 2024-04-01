@@ -1,0 +1,10 @@
+---
+
+- name: run neutron init container
+  include: init_opensdn.yml
+
+- name: config neutron_server container
+  include: config_opensdn.yml
+
+- name: delete containers
+  include: restart_containers.yml
