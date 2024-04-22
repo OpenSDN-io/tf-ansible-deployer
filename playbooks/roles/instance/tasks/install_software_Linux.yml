@@ -65,9 +65,13 @@
     name: python3-yaml
     state: absent
 
+# pin requests lib due to "urllib3 v2 incompatibility"
+# https://github.com/docker/docker-py/issues/3113
+# extra_args - to avoid error during install pyyaml on modern ubuntu(22.04)
 - name: install python compose
   pip:
-    name: ['docker-compose==1.24.1', 'pyopenssl==24.0.0']
+    name: ['docker-compose==1.28.6', 'requests<2.29']
+    extra_args: "--no-build-isolation"
   register: res
   retries: 5
   until: res is success
