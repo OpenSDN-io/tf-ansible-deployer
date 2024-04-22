@@ -13,7 +13,7 @@
   register: res
   retries: 5
   until: res is success
-  when: ansible_os_family == 'RedHat'
+  when: ansible_os_family == 'RedHat' or ansible_os_family == 'Rocky'
 
 # NOTE: Do not use easy_install for RedHat. There is a bug that might cause
 # easy_install to hang:

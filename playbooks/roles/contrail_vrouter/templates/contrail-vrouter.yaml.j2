@@ -61,7 +61,7 @@ services:
       - /usr/src:/usr/src
       - /lib/modules:/lib/modules
       - /bin:/host/bin
-{% if ansible_os_family == 'RedHat' %}
+{% if ansible_os_family == 'RedHat' or ansible_os_family == 'Rocky' %}
       - /etc/sysconfig/network-scripts:/etc/sysconfig/network-scripts
 {% endif %}
     volumes_from:
@@ -81,7 +81,7 @@ services:
       - /etc:/host/etc
       - /var/lib/contrail:/var/lib/contrail
       - /var/run:/var/run
-{% if ansible_os_family == 'RedHat' %}
+{% if ansible_os_family == 'RedHat' or ansible_os_family == 'Rocky' %}
       - /etc/sysconfig/network-scripts:/etc/sysconfig/network-scripts
 {% endif %}
       - /dev:/dev

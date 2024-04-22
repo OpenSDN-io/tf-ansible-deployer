@@ -1,6 +1,16 @@
 ---
 
-- include: "{{ ansible_os_family }}.yml"
+# ansible<3 detects ansible_os_family as Rocky and ansible==6.x detects it as RedHat
+# so include Rocky by ansible_distribution var (it's same for both versions)
+- name: include rocky specific
+  include: "Rocky.yml"
+  when:
+    - ansible_distribution == 'Rocky'
+# and leave other distributions as is (TODO: update redhat playbook to support other than centos7)
+- name: include OS specific
+  include: "{{ ansible_os_family }}.yml"
+  when:
+    - ansible_distribution != 'Rocky'
 
 - name: add Contrail's insecure registry
   include: "insecure_registry_{{ ansible_system }}.yml

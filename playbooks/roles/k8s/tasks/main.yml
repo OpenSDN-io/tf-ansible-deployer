@@ -45,8 +45,17 @@
     - instance_data.roles is defined
     - instance_data.roles.k8s_master is defined or instance_data.roles.k8s_node is defined
 
+# ansible<3 detects ansible_os_family as Rocky and ansible==6.x detects it as RedHat
+# so include Rocky by ansible_distribution var (it's same for both versions)
+- name: rocky specific package install
+  include: "Rocky.yml"
+  when:
+    - ansible_distribution == 'Rocky'
+# and leave other distributions as is (TODO: update redhat playbook to support other than centos7)
 - name: OS specific package install
   include: "{{ ansible_os_family }}.yml"
+  when:
+    - ansible_distribution != 'Rocky'
 
 # kubetcl must be first in the list - kubeadm has dependency to kubectl without version
 - name: Install k8s packages if defined

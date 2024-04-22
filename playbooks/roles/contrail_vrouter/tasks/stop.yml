@@ -18,7 +18,7 @@
 
 - name: remove all built vrouter.ko on RedHat families
   shell: "rm -rf /lib/modules/*/kernel/net/vrouter/vrouter.ko"
-  when: ansible_os_family == 'RedHat'
+  when: ansible_os_family == 'RedHat' or ansible_os_family == 'Rocky'
 
 - name: remove all built vrouter.ko on Debian families
   shell: "rm -rf /lib/modules/*/updates/dkms/vrouter.ko"

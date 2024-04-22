@@ -35,4 +35,4 @@
     name: chronyd
     enabled: no
   ignore_errors: yes
-  when: ansible_os_family == 'RedHat'
+  when: ansible_os_family == 'RedHat' or ansible_os_family == 'Rocky'
