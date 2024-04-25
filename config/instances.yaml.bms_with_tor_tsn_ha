@@ -49,7 +49,7 @@ instances:
         TOR_TSN_NAME: noden6
 
 global_configuration:
-  CONTAINER_REGISTRY: opencontrailnightly
+  CONTAINER_REGISTRY: opensdn
 contrail_configuration:
   CONTRAIL_VERSION: queens-dev
   CLOUD_ORCHESTRATOR: openstack

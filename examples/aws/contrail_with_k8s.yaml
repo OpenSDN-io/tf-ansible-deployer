@@ -39,6 +39,6 @@ instances:
       vrouter:
       k8s_node:
 contrail_configuration:
-  CONTAINER_REGISTRY: opencontrailnightly
+  CONTAINER_REGISTRY: opensdn
   CONTRAIL_VERSION: latest
   UPGRADE_KERNEL: true

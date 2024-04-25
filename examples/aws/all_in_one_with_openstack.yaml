@@ -27,7 +27,7 @@ instances:
       vrouter:
       openstack_compute:
 contrail_configuration:
-  CONTAINER_REGISTRY: opencontrailnightly
+  CONTAINER_REGISTRY: opensdn
   CONTRAIL_VERSION: latest
   RABBITMQ_NODE_PORT: 5673
   AUTH_MODE: keystone

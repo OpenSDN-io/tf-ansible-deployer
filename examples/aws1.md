@@ -119,7 +119,7 @@ instances:
       vrouter:
       openstack_compute:
 global_configuration:
-  CONTAINER_REGISTRY: opencontrailnightly
+  CONTAINER_REGISTRY: opensdn
 contrail_configuration:
   CONTRAIL_VERSION: latest
   CLOUD_ORCHESTRATOR: openstack

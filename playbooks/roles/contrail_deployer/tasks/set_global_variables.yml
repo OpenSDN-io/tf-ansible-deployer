@@ -43,9 +43,9 @@
     - global_configuration.CONTAINER_REGISTRY is defined
   tags:
     - always
-- name: set registry to opencontrailnightly if undefined
+- name: set registry to opensdn if undefined
   set_fact:
-    container_registry: opencontrailnightly
+    container_registry: opensdn
   when:
     container_registry is not defined
   tags:

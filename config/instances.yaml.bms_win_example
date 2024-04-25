@@ -15,7 +15,7 @@ instances:
       win_cnm_plugin:
 
 global_configuration:
-  CONTAINER_REGISTRY: opencontrailnightly
+  CONTAINER_REGISTRY: opensdn
 
 contrail_configuration:
   CLOUD_ORCHESTRATOR: none

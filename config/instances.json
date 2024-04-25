@@ -46,6 +46,6 @@
     "CONTRAIL_VERSION": "latest"
   },
   "global_configuration": {
-    "CONTAINER_REGISTRY": "opencontrailnightly"
+    "CONTAINER_REGISTRY": "opensdn"
   }
 }

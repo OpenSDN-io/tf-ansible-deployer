@@ -50,7 +50,7 @@ instances:
 contrail_configuration:
   CONTRAIL_VERSION: latest
 global_configuration:
-  CONTAINER_REGISTRY: opencontrailnightly
+  CONTAINER_REGISTRY: opensdn
 EOF
 ansible-playbook -i inventory/ -e orchestrator=kubernetes playbooks/provision_instances.yml
 ansible-playbook -i inventory/ -e orchestrator=kubernetes playbooks/configure_instances.yml

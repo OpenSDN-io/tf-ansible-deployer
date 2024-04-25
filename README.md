@@ -228,7 +228,7 @@ This section sets global service parameters. All parameters are optional.
 
 ```
 global_configuration:
-  CONTAINER_REGISTRY: opencontrailnightly
+  CONTAINER_REGISTRY: opensdn
   REGISTRY_PRIVATE_INSECURE: True
   CONTAINER_REGISTRY_USERNAME: YourRegistryUser
   CONTAINER_REGISTRY_PASSWORD: YourRegistryPassword

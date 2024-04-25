@@ -54,7 +54,7 @@ instances:
       openstack_monitoring:
       openstack_compute:
 global_configuration:
-  CONTAINER_REGISTRY: opencontrailnightly
+  CONTAINER_REGISTRY: opensdn
 contrail_configuration:
   CONTRAIL_VERSION: queens-master-20180210000007
   CLOUD_ORCHESTRATOR: openstack
