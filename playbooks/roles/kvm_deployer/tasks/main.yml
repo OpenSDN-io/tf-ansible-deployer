@@ -31,6 +31,6 @@
   with_dict: "{{ instances }}"
 
 - name: combine kvm container hosts
-  include: combine_kvm_container_hosts.yml
+  include_tasks: combine_kvm_container_hosts.yml
   with_dict: "{{ kvm_host_dict }}"
   when: kvm_host_dict is defined

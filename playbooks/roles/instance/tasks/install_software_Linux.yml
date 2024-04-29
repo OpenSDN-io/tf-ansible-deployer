@@ -35,28 +35,28 @@
 # ansible<3 detects ansible_os_family as Rocky and ansible==6.x detects it as RedHat
 # so include RedHat explicitly by ansible_distribution var (it's same for both versions)
 - name: rocky specific package install
-  include: "RedHat.yml"
+  include_tasks: "RedHat.yml"
   when:
     - ansible_distribution == 'Rocky'
 # and leave other distributions as is
 - name: OS specific package install
-  include: "{{ ansible_os_family }}.yml"
+  include_tasks: "{{ ansible_os_family }}.yml"
   when:
     - ansible_distribution != 'Rocky'
 
 - name: Set up ntp
-  include: ntp.yml
+  include_tasks: ntp.yml
   when: provider_data.ntpserver is defined
 
 # ansible<3 detects ansible_os_family as Rocky and ansible==6.x detects it as RedHat
 # so include RedHat explicitly by ansible_distribution var (it's same for both versions)
 - name: rocky specific kernel install, grub modifications, reboot
-  include: "RedHat_kernel.yml"
+  include_tasks: "RedHat_kernel.yml"
   when:
     - ansible_distribution == 'Rocky'
 # and leave other distributions as is
 - name: OS specific kernel install, grub modifications, reboot
-  include: "{{ ansible_os_family }}_kernel.yml"
+  include_tasks: "{{ ansible_os_family }}_kernel.yml"
   when:
     - ansible_distribution != 'Rocky'
 
@@ -77,7 +77,7 @@
   until: res is success
 
 - name: Manage /etc/hosts
-  include: manage_etc_hosts.yml
+  include_tasks: manage_etc_hosts.yml
   when: provider_data.manage_etc_hosts | default("True") | bool
 
 - name: create log file directory

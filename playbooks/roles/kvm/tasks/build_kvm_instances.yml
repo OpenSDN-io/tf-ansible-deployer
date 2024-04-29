@@ -82,5 +82,5 @@
      uncompressed_image_name: "{{ uncompressed_image_file.files[0].path.split('/')[3] }}"
 
 - name: build vms
-  include: build_and_start_container_hosts.yml
+  include_tasks: build_and_start_container_hosts.yml
   with_dict: "{{ hostvars['localhost'].kvm_host_dict[inventory_hostname] }}"

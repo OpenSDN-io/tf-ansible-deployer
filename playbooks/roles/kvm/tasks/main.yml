@@ -1,2 +1,2 @@
 - name: Create KVM instance
-  include: build_kvm_instances.yml
+  include_tasks: build_kvm_instances.yml

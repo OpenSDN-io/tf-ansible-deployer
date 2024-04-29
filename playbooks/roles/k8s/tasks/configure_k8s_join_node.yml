@@ -18,7 +18,7 @@
   when: listen_nic is defined
 
 - name: Configure kubelet
-  include: configure_kubelet.yml
+  include_tasks: configure_kubelet.yml
 
 - name: enable kubelet service
   systemd:

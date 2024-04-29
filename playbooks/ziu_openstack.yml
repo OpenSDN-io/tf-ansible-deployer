@@ -1,2 +1,2 @@
 ---
-  - include: "install_openstack.yml"
+  - import_playbook: "install_openstack.yml"

@@ -17,7 +17,7 @@
   when: contrail_configuration.STATS_COLLECTOR_DESTINATION_PATH is defined
 
 - name: run common tasks
-  include: "common_{{ ansible_system }}.yml"
+  include_tasks: "common_{{ ansible_system }}.yml"
 
 - name: create redis
   include_role:
