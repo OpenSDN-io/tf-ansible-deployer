@@ -128,13 +128,3 @@
 - name: display new instance
   debug:
    msg: "{{ aws.instances }}"
-
-#- name: configure new instances
-#  include: ../../../../../host_configuration/playbooks/roles/configure_container_hosts/tasks/main.yml
-#- name: Manage new instances
-#  hosts: new_instances
-#  connection: ssh
-#  sudo: True
-#  roles:
-#    - base_configuration
-#    - production_server

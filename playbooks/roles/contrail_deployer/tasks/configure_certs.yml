@@ -43,5 +43,5 @@
   register: root_ca_key_stat
 
 - name: generate root CA
-  include: generate_ca.yml
+  include_tasks: generate_ca.yml
   when: root_ca_stat.stat.exists == False or root_ca_key_stat.stat.exists == False

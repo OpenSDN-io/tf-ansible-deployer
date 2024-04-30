@@ -9,7 +9,7 @@
   when: provider_config[instance_data.provider] is defined
 
 - name: kolla customizations
-  include: kolla_baremetal.yml
+  include_tasks: kolla_baremetal.yml
 
 # check input params
 - fail:
@@ -104,7 +104,7 @@
     - openstack_nodes_list | length > 0
 
 - name: Add required /etc/hosts entries
-  include: manage_etc_hosts.yml
+  include_tasks: manage_etc_hosts.yml
   when: provider_data.manage_etc_hosts | default("True") | bool
 
 # define empty kolla_globals
@@ -127,16 +127,12 @@
   delegate_to: localhost
   run_once: yes
 
-- include: inventory.yml
-  delegate_to: localhost
-  run_once: yes
+- include_tasks: inventory.yml
 
-- include: passwords.yml
+- include_tasks: passwords.yml
   when: gen_passwords | bool
-  delegate_to: localhost
-  run_once: yes
 
-- include: host_params.yml
+- include_tasks: host_params.yml
 
 - name: Populate etc/kolla/globals.yml
   template:

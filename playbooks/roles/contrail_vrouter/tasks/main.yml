@@ -92,7 +92,7 @@
         - set_fact:
             new_kernel_init_image: "{{ container_registry }}/{{ vrouter_kernel_init_img_name }}:{{ contrail_version_tag }}"
         - name: stop vrouter agent and unload vrouter driver
-          include: stop.yml
+          include_tasks: stop.yml
           when:
             - current_config is defined
             - current_config.services is defined

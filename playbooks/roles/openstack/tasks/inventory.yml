@@ -3,3 +3,5 @@
   template:
     src: "{{ role_path }}/templates/inventory.j2"
     dest: "{{ kolla_dir }}/ansible/inventory/{{ inventory_name }}"
+  delegate_to: localhost
+  run_once: yes

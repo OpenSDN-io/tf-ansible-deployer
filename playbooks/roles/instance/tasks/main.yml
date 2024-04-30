@@ -7,10 +7,10 @@
    - always
 
 - name: install software
-  include: "install_software_{{ ansible_system }}.yml"
+  include_tasks: "install_software_{{ ansible_system }}.yml"
 
 - name: copy root ca
-  include: copy_root_ca.yml
+  include_tasks: copy_root_ca.yml
   when:
     - (( contrail_configuration.SSL_ENABLE is defined ) and
       ( contrail_configuration.SSL_ENABLE|bool )) or

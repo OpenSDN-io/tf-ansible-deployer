@@ -70,7 +70,7 @@
     - install_contrail
 
 - name: add gce container hosts
-  include: add_gce_container_hosts.yml
+  include_tasks: add_gce_container_hosts.yml
   when: item.value.provider=='gce'
   with_dict: "{{ instances }}"
   tags:
@@ -78,7 +78,7 @@
     - install_contrail
 
 - name: add aws container hosts
-  include: add_aws_container_hosts.yml
+  include_tasks: add_aws_container_hosts.yml
   when: item.value.provider=='aws'
   with_dict: "{{ instances }}"
   tags:

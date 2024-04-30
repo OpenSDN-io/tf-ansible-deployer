@@ -1,6 +1,6 @@
 ---
 - name: OS specific package install
-  include: RedHat.yml
+  include_tasks: RedHat.yml
   when: ansible_os_family == 'RedHat' or ansible_os_family == 'Rocky'
 
 - name: install git to operate on kolla branches

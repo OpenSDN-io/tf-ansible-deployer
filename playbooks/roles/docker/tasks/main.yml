@@ -3,18 +3,19 @@
 # ansible<3 detects ansible_os_family as Rocky and ansible==6.x detects it as RedHat
 # so include Rocky by ansible_distribution var (it's same for both versions)
 - name: include rocky specific
-  include: "Rocky.yml"
+  include_tasks: "Rocky.yml"
   when:
     - ansible_distribution == 'Rocky'
 # and leave other distributions as is (TODO: update redhat playbook to support other than centos7)
 - name: include OS specific
-  include: "{{ ansible_os_family }}.yml"
+  include_tasks: "{{ ansible_os_family }}.yml"
   when:
     - ansible_distribution != 'Rocky'
 
 - name: add Contrail's insecure registry
-  include: "insecure_registry_{{ ansible_system }}.yml
-    docker_registry={{ global_configuration.CONTAINER_REGISTRY }}"
+  include_tasks: "insecure_registry_{{ ansible_system }}.yml"
+  vars:
+    docker_registry: "{{ global_configuration.CONTAINER_REGISTRY }}"
   when:
     - global_configuration is defined
     - global_configuration.CONTAINER_REGISTRY is defined
@@ -25,16 +26,18 @@
 # therefore this code handles kolla's parameters and do not pass them into kolla-ansible
 # kolla-ansible always treat passed registy as insecure. so if config has such parameter then we should add it to the list
 - name: add kolla's insecure registry
-  include: "insecure_registry_{{ ansible_system }}.yml
-    docker_registry={{ kolla_config.kolla_globals.docker_registry }}"
+  include_tasks: "insecure_registry_{{ ansible_system }}.yml"
+  vars:
+    docker_registry: "{{ kolla_config.kolla_globals.docker_registry }}"
   when:
     - kolla_config is defined
     - kolla_config.kolla_globals is defined
     - kolla_config.kolla_globals.docker_registry is defined
 
 - name: add private registry
-  include: "private_registry_{{ ansible_system }}.yml
-    docker_registry={{ global_configuration.CONTAINER_REGISTRY }}"
+  include_tasks: "private_registry_{{ ansible_system }}.yml"
+  vars:
+    docker_registry: "{{ global_configuration.CONTAINER_REGISTRY }}"
   when:
     - global_configuration is defined
     - global_configuration.CONTAINER_REGISTRY is defined
@@ -42,13 +45,14 @@
     - global_configuration.REGISTRY_PRIVATE_SECURE == true
 
 - name: start docker daemon
-  include: "start_docker_{{ ansible_system }}.yml"
+  include_tasks: "start_docker_{{ ansible_system }}.yml"
 
 - name: add Contrail's private registry authentication
-  include: auth_registry.yaml
-    docker_registry="{{ global_configuration.CONTAINER_REGISTRY }}"
-    docker_registry_username="{{ global_configuration.CONTAINER_REGISTRY_USERNAME }}"
-    docker_registry_password="{{ global_configuration.CONTAINER_REGISTRY_PASSWORD }}"
+  include_tasks: auth_registry.yaml
+  vars:
+    docker_registry: "{{ global_configuration.CONTAINER_REGISTRY }}"
+    docker_registry_username: "{{ global_configuration.CONTAINER_REGISTRY_USERNAME }}"
+    docker_registry_password: "{{ global_configuration.CONTAINER_REGISTRY_PASSWORD }}"
   when:
     - global_configuration is defined
     - global_configuration.CONTAINER_REGISTRY is defined
@@ -56,10 +60,11 @@
     - global_configuration.CONTAINER_REGISTRY_PASSWORD is defined
 
 - name: add kolla's private registry authentication
-  include: auth_registry.yaml
-    docker_registry="{{ kolla_config.kolla_globals.docker_registry }}"
-    docker_registry_username="{{ kolla_config.kolla_globals.docker_registry_username }}"
-    docker_registry_password="{{ kolla_config.kolla_globals.docker_registry_password }}"
+  include_tasks: auth_registry.yaml
+  vars:
+    docker_registry: "{{ kolla_config.kolla_globals.docker_registry }}"
+    docker_registry_username: "{{ kolla_config.kolla_globals.docker_registry_username }}"
+    docker_registry_password: "{{ kolla_config.kolla_globals.docker_registry_password }}"
   when:
     - kolla_config is defined
     - kolla_config.kolla_globals is defined
