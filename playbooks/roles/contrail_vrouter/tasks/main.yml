@@ -1,4 +1,14 @@
 ---
+
+- name: install network-scripts
+  dnf:
+    name: network-scripts
+    enablerepo: devel
+  register: res
+  retries: 5
+  until: res is success
+  when: ansible_os_family == 'Rocky'
+
 - name: "create /etc/contrail/vrouter"
   file:
     path: /etc/contrail/vrouter
