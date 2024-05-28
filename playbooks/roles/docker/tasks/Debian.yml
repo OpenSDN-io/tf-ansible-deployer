@@ -1,4 +1,9 @@
 ---
+- name: upgrade pyopenssl #otherwise next step fails
+  pip:
+    name: pyopenssl
+  ignore_errors: true
+
 - name: Install pre-requisites
   apt:
     name: ['apt-transport-https', 'ca-certificates', 'curl', 'software-properties-common']
