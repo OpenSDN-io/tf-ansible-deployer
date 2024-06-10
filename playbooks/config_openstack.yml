@@ -1,0 +1,46 @@
+- name: Create container host group for OpenStack
+  hosts: localhost
+  connection: local
+  gather_facts: no
+  pre_tasks:
+    - name: Expose instances
+      set_fact:
+        instances: "{{ instances }}"
+      when: hostvars['localhost']['instances'] is undefined
+    - name: Expose global_configuration
+      set_fact:
+        global_configuration: "{{ global_configuration | default({}) }}"
+      when: hostvars['localhost']['global_configuration'] is undefined
+  roles:
+    - contrail_deployer
+    - openstack_deployer
+  vars_files:
+    - "{{ config_file }}"
+  vars:
+    - container_registry: "{{ hostvars['localhost'].container_registry }}"
+    - contrail_version_tag: "{{ hostvars['localhost'].contrail_version_tag }}"
+  tags: always
+
+- name: config openstack
+  hosts: container_hosts
+  gather_facts: yes
+  tasks:
+    - include_role:
+        name: neutron
+      when: roles[instance_name].openstack is defined
+    - include_role:
+        name: nova
+      when: roles[instance_name].openstack_compute is defined
+    - include_role:
+        name: heat
+      when: roles[instance_name].openstack is defined
+  vars:
+    container_registry: "{{ hostvars['localhost'].container_registry }}"
+    contrail_version_tag: "{{ hostvars['localhost'].contrail_version_tag }}"
+    roles: "{{ hostvars['localhost'].roles }}"
+    opencontrail_api_server_port: "{{ hostvars['localhost'].config_api_port }}"
+    opencontrail_collector_port: "{{ hostvars['localhost'].analytics_api_port }}"
+    contrail_plugin_keystone_port: "{{ hostvars['localhost'].keystone_auth_public_port }}"
+    contrail_plugin_internal_protocol: "{{ hostvars['localhost'].keystone_auth_proto }}"
+    opencontrail_api_server_ip: "{{ hostvars['localhost'].opencontrail_api_server_ip }}"
+    opencontrail_collector_ip: "{{ hostvars['localhost'].opencontrail_collector_ip }}"

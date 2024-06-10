@@ -58,3 +58,12 @@
     roles: "{{ roles | extract_roles(item) }}"
   when: item.value.roles is defined
   with_dict: "{{ instances }}"
+
+- name: set vars for vanilla openstack deploy
+  set_fact:
+    config_api_port: "{{ CONFIG_API_PORT }}"
+    analytics_api_port: "{{ ANALYTICS_API_PORT }}"
+    keystone_auth_public_port: "{{ KEYSTONE_AUTH_PUBLIC_PORT }}"
+    keystone_auth_proto: "{{ KEYSTONE_AUTH_PROTO }}"
+    opencontrail_api_server_ip: "{{ opencontrail_api_server_ip }}"
+    opencontrail_collector_ip: "{{ opencontrail_collector_ip }}"

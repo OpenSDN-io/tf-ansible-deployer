@@ -1,0 +1,15 @@
+---
+- name: Remove init container
+  docker_container:
+       name: contrail-openstack-heat-init
+       state: absent
+  ignore_errors: true
+
+- name: Copy heat plugin to shared volume
+  docker_container:
+       name: contrail-openstack-heat-init
+       image: "{{ container_registry }}/contrail-openstack-heat-init:{{ contrail_version_tag }}"
+       volumes:
+         - "opensdn:/opt/plugin/"
+       env:
+           OPENSTACK_VERSION: "{{ openstack_version }}"

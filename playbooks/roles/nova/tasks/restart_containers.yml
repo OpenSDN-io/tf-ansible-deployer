@@ -1,0 +1,50 @@
+---
+
+- name: restart nova_compute container
+  shell: "sudo docker restart nova_compute"
+  no_log: false
+  ignore_errors: true
+  args:
+    chdir: "/tmp/"
+
+- name: restart nova_libvirt container
+  shell: "sudo docker restart nova_libvirt"
+  no_log: false
+  ignore_errors: true
+  args:
+    chdir: "/tmp/"
+
+- name: restart nova_ssh container
+  shell: "sudo docker restart nova_ssh"
+  no_log: false
+  ignore_errors: true
+  args:
+    chdir: "/tmp/"
+
+- name: restart nova_novncproxy container
+  shell: "sudo docker restart nova_novncproxy"
+  no_log: false
+  ignore_errors: true
+  args:
+    chdir: "/tmp/"
+
+- name: restart nova_conductor container
+  shell: "sudo docker restart nova_conductor"
+  no_log: false
+  ignore_errors: true
+  args:
+    chdir: "/tmp/"
+
+- name: restart nova_api container
+  shell: "sudo docker restart nova_api"
+  no_log: false
+  ignore_errors: true
+  args:
+    chdir: "/tmp/"
+
+- name: restart nova_scheduler container
+  shell: "sudo docker restart nova_scheduler"
+  no_log: false
+  ignore_errors: true
+  args:
+    chdir: "/tmp/"

@@ -1,0 +1,10 @@
+---
+
+- name: run nova_compute init container
+  include: init_opensdn.yml
+
+- name: config nova_compute container
+  include: config_opensdn.yml
+
+- name: restart containers
+  include: restart_containers.yml

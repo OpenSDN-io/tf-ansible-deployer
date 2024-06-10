@@ -1,0 +1,22 @@
+---
+
+- name: restart heat_engine container
+  shell: "sudo docker restart heat_engine"
+  no_log: false
+  ignore_errors: true
+  args:
+    chdir: "{{ role_path }}"
+
+- name: restart heat_api container
+  shell: "sudo docker restart heat_api"
+  no_log: false
+  ignore_errors: true
+  args:
+    chdir: "{{ role_path }}"
+
+- name: restart heat_api_cfn container
+  shell: "sudo docker restart heat_api_cfn"
+  no_log: false
+  ignore_errors: true
+  args:
+    chdir: "{{ role_path }}"

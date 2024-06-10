@@ -1,0 +1,40 @@
+---
+
+- name: restart neutron_server container
+  shell: "sudo docker restart neutron_server"
+  no_log: false
+  ignore_errors: true
+  args:
+    chdir: "{{ role_path }}"
+
+- name: delete metadata_container
+  shell: "sudo docker rm -f neutron_metadata_agent"
+  no_log: false
+  ignore_errors: true
+  args:
+    chdir: "{{ role_path  }}"
+  run_once: true
+
+- name: delete l3 container
+  shell: "sudo docker rm -f neutron_l3_agent"
+  no_log: false
+  ignore_errors: true
+  args:
+    chdir: "{{ role_path }}"
+  run_once: true
+
+- name: delete dhcp container
+  shell: "sudo docker rm -f neutron_dhcp_agent"
+  no_log: false
+  ignore_errors: true
+  args:
+    chdir: "{{ role_path }}"
+  run_once: true
+
+- name: delete openvswitch container
+  shell: "sudo docker rm -f neutron_openvswitch_agent"
+  no_log: false
+  ignore_errors: true
+  args:
+    chdir: "{{ role_path }}"
+  run_once: true

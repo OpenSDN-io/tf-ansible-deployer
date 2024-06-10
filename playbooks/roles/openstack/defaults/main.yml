@@ -1,12 +1,19 @@
 ---
 kolla_config: {}
 host_intf_dict: {}
-kolla_dir: "{{ playbook_dir }}/../../contrail-kolla-ansible"
+contrail_kolla_dir: "{{ playbook_dir }}/../../contrail-kolla-ansible"
+vanilla_kolla_dir: "{{ playbook_dir}}/../../kolla-ansible"
+kolla_mode: >-
+    {%- if contrail_configuration.KOLLA_MODE is defined -%}
+      {{ contrail_configuration.KOLLA_MODE }}
+    {%- else -%}
+      {{ 'patched' }}
+    {%- endif -%}
 inventory_name: "my_inventory"
 kolla_passwd: "{{ kolla_config.get('kolla_passwords', {}) }}"
 gen_passwords: yes
 
-default_openstack_sku: queens
+default_openstack_sku: "unmaintained/yoga"
 openstack_sku: >-
     {%- if contrail_configuration.OPENSTACK_VERSION is defined -%}
       {{ contrail_configuration.OPENSTACK_VERSION }}

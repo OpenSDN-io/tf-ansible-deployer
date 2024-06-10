@@ -1,0 +1,10 @@
+---
+
+- name: Copy heat config script to all hosts
+  copy:
+    src: "{{ role_path }}/files/"
+    dest: "/tmp/"
+    mode: 0755
+
+- name: Execute heat config script
+  command: "/tmp/config_opensdn.sh"
