@@ -61,6 +61,13 @@
     content: "{{ item.value }}"
   with_dict: "{{ kolla_config.customize | default({}) }}"
 
+- name: Remove python3-requests
+  package:
+    name: python3-requests
+    state: absent
+  when:
+    - ansible_os_family == 'RedHat' or ansible_os_family == 'Rocky'
+
 - name: install python compose
   pip:
     name: "docker<7"
