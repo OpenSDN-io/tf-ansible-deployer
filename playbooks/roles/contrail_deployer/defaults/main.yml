@@ -11,7 +11,7 @@ KEYSTONE_AUTH_PROTO: http
 KEYSTONE_AUTH_PUBLIC_PORT: 5000
 ANALYTICS_API_PORT: 8081
 CONFIG_API_PORT: 8082
-default_openstack_version: rocky
+default_openstack_version: yoga
 openstack_version: >-
     {%- if contrail_configuration.OPENSTACK_VERSION is defined -%}
       {{ contrail_configuration.OPENSTACK_VERSION }}
