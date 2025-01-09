@@ -23,3 +23,12 @@
 - name: remove all built vrouter.ko on Debian families
   shell: "rm -rf /lib/modules/*/updates/dkms/vrouter.ko"
   when: ansible_os_family == 'Debian'
+
+# and remove compose artefacts - otherwise we catch error exception on update
+- name: "stop vrouter"
+  docker_compose:
+    project_src: /etc/contrail/vrouter
+    state: absent
+  environment:
+    DOCKER_CLIENT_TIMEOUT: '120'
+    COMPOSE_HTTP_TIMEOUT: '120'

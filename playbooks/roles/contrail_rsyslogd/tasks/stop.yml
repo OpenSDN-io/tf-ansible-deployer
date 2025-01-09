@@ -1,0 +1,8 @@
+---
+- name: "stop rsyslogd"
+  docker_compose:
+    project_src: /etc/contrail/rsyslogd
+    state: absent
+  environment:
+    DOCKER_CLIENT_TIMEOUT: '120'
+    COMPOSE_HTTP_TIMEOUT: '120'

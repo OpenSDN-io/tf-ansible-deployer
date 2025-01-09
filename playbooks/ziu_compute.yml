@@ -43,7 +43,10 @@
     tasks:
       - include_role:
           name: contrail_rsyslogd
-          tasks_from: update_images
+          tasks_from: "{{ item }}"
+        with_items:
+          - update_images
+          - stop
         when: roles[instance_name].vrouter is defined and ansible_system == 'Linux'
         tags:
           - vrouter
@@ -77,15 +80,15 @@
           dir: "{{ playbook_dir }}/roles/contrail/defaults"
           extensions: ['yml']
       - include_role:
+          name: contrail_vrouter
+        when: roles[instance_name].vrouter is defined and ansible_system == 'Linux'
+        tags: vrouter
+      - include_role:
           name: contrail_rsyslogd
         when: roles[instance_name].vrouter is defined and ansible_system == 'Linux'
         tags:
           - vrouter
           - rsyslogd
-      - include_role:
-          name: contrail_vrouter
-        when: roles[instance_name].vrouter is defined and ansible_system == 'Linux'
-        tags: vrouter
     vars:
       - roles: "{{ hostvars['localhost'].roles }}"
       - instance_name: "{{ hostvars[inventory_hostname].instance_name }}"
