@@ -1,7 +1,7 @@
 ---
 
 kolla_config: {}
-default_openstack_sku: "unmaintained/yoga"
+default_openstack_sku: "yoga"
 openstack_sku: >-
     {%- if contrail_configuration.OPENSTACK_VERSION is defined -%}
       {{ contrail_configuration.OPENSTACK_VERSION }}
@@ -10,6 +10,16 @@ openstack_sku: >-
     {%- else -%}
       {{ default_openstack_sku }}
     {%- endif -%}
+
+# dynamic map - must be edited twice per year
+kolla_vanilla_tags:
+  "xena": "xena-eol"
+  "yoga": "yoga-eol"
+  "zed": "zed-eol"
+  "2023.1": "unmaintained/2023.1"
+  "2023.2": "stable/2023.2"
+  "2024.1": "stable/2024.1"
+  "2024.2": "stable/2024.2"
 
 contrail_kolla_dir: "{{ playbook_dir }}/../../contrail-kolla-ansible"
 vanilla_kolla_dir: "{{ playbook_dir}}/../../kolla-ansible"

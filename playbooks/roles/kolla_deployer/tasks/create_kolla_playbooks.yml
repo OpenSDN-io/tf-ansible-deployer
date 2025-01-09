@@ -39,9 +39,18 @@
     - kolla_mode is undefined or kolla_mode != 'vanilla'
 
 - name: Choosing vanilla openstack branch
-  shell: "git checkout unmaintained/yoga"
-  args:
-    chdir: "{{ kolla_dir }}"
+  block:
+    - name: Detect branch
+      set_fact:
+        kolla_vanilla_branch: "{{ kolla_vanilla_tags[openstack_sku] | default('') }}"
+    - name: Check branch for emptyness
+      fail:
+        msg: Branch for {{ openstack_sku }} can not be detected. Fail deployment.
+      when: kolla_vanilla_branch == ""
+    - name: Checkout branch
+      shell: "git checkout {{ kolla_vanilla_branch }}"
+      args:
+        chdir: "{{ kolla_dir }}"
   when:
     - not skip_checkout|bool
     - kolla_mode is defined
