@@ -39,7 +39,7 @@
 
 - name: set k8s version for Debian if not defined
   set_fact:
-    k8s_package_version: "={{ k8s_version }}-00"
+    k8s_package_version: "={{ k8s_version }}-1.1"
   when:
     - ansible_os_family == 'Debian'
     - instance_data.roles is defined
