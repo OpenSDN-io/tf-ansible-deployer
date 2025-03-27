@@ -30,11 +30,11 @@ default_kolla_globals:
   #   opencontrail      - for regular monolitic plugin
   #   opencontrail-ml2  - for ml2 plugin
   neutron_plugin_agent: opencontrail
-  neutron_opencontrail_init_image_full: "{{ container_registry }}/contrail-openstack-neutron-init:{{ contrail_version_tag }}"
-  neutron_opencontrail_ml2_init_image_full: "{{ container_registry }}/contrail-openstack-neutron-ml2-init:{{ contrail_version_tag }}"
-  nova_compute_opencontrail_init_image_full: "{{ container_registry}}/contrail-openstack-compute-init:{{ contrail_version_tag }}"
-  ironic_notification_manager_image_full: "{{ container_registry}}/contrail-openstack-ironic-notification-manager:{{ contrail_version_tag }}"
-  heat_opencontrail_init_image_full: "{{ container_registry}}/contrail-openstack-heat-init:{{ contrail_version_tag }}"
+  neutron_opencontrail_init_image_full: "{{ container_registry }}/opensdn-openstack-neutron-init:{{ contrail_version_tag }}"
+  neutron_opencontrail_ml2_init_image_full: "{{ container_registry }}/opensdn-openstack-neutron-ml2-init:{{ contrail_version_tag }}"
+  nova_compute_opencontrail_init_image_full: "{{ container_registry}}/opensdn-openstack-compute-init:{{ contrail_version_tag }}"
+  ironic_notification_manager_image_full: "{{ container_registry}}/opensdn-openstack-ironic-notification-manager:{{ contrail_version_tag }}"
+  heat_opencontrail_init_image_full: "{{ container_registry}}/opensdn-openstack-heat-init:{{ contrail_version_tag }}"
   enable_barbican: yes
   customize_etc_hosts: no
   enable_swift: no

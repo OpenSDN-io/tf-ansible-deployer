@@ -4,11 +4,11 @@
   retries: 5
   until: res.rc == 0
   with_items:
-    - contrail-node-init
-    - contrail-nodemgr
-    - contrail-analytics-alarm-gen
-    - contrail-external-kafka
-    - contrail-provisioner
+    - opensdn-node-init
+    - opensdn-nodemgr
+    - opensdn-analytics-alarm-gen
+    - opensdn-external-kafka
+    - opensdn-provisioner
   when:
     - contrail_configuration.UPDATE_IMAGES is undefined or contrail_configuration.UPDATE_IMAGES != false
     - roles[instance_name].analytics_alarm is defined

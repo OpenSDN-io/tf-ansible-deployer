@@ -1,17 +1,17 @@
 version: '2.4'
 services:
   node-init:
-    image: "{{ container_registry }}/contrail-node-init:{{ contrail_version_tag }}"
+    image: "{{ container_registry }}/opensdn-node-init:{{ contrail_version_tag }}"
     env_file: /etc/contrail/common_vrouter.env
     environment:
-      - CONTRAIL_STATUS_IMAGE="{{ container_registry }}/contrail-status:{{ contrail_version_tag }}"
+      - CONTRAIL_STATUS_IMAGE="{{ container_registry }}/opensdn-status:{{ contrail_version_tag }}"
     privileged: true
     pid: host
     network_mode: "host"
     volumes:
       {{ common_volumes | to_yaml | indent(width=6) }}
   nodemgr:
-    image: "{{ container_registry }}/contrail-nodemgr:{{ contrail_version_tag }}"
+    image: "{{ container_registry }}/opensdn-nodemgr:{{ contrail_version_tag }}"
     env_file: /etc/contrail/common_vrouter.env
     environment:
       - NODE_TYPE=vrouter
@@ -30,7 +30,7 @@ services:
         max-size: "{{ compute_log_max_size }}"
         max-file: "{{ compute_log_max_file }}"
   provisioner:
-    image: "{{ container_registry }}/contrail-provisioner:{{ contrail_version_tag }}"
+    image: "{{ container_registry }}/opensdn-provisioner:{{ contrail_version_tag }}"
     env_file: 
       - /etc/contrail/common_vrouter.env
       - /etc/contrail/defaults.env
@@ -50,7 +50,7 @@ services:
         max-size: "{{ compute_log_max_size }}"
         max-file: "{{ compute_log_max_file }}"
   vrouter-kernel-init-dpdk:
-    image: "{{ container_registry }}/contrail-vrouter-kernel-init-dpdk:{{ contrail_version_tag }}"
+    image: "{{ container_registry }}/opensdn-vrouter-kernel-init-dpdk:{{ contrail_version_tag }}"
     network_mode: host
     privileged: true
     env_file: /etc/contrail/common_vrouter.env
@@ -68,7 +68,7 @@ services:
       - node-init
 {% if mellanox %}
   vrouter-plugin-mellanox-init:
-    image: "{{ container_registry }}/contrail-vrouter-plugin-mellanox-init-{{plugin_os}}:{{ contrail_version_tag }}"
+    image: "{{ container_registry }}/opensdn-vrouter-plugin-mellanox-init-{{plugin_os}}:{{ contrail_version_tag }}"
     network_mode: host
     privileged: true
     env_file: /etc/contrail/common_vrouter.env
@@ -89,7 +89,7 @@ services:
 {% endif %}
 {% if n3000 %}
   vrouter-plugin-n3000-init:
-    image: "{{ container_registry }}/contrail-vrouter-plugin-n3000-init-{{plugin_os}}:{{ contrail_version_tag }}"
+    image: "{{ container_registry }}/opensdn-vrouter-plugin-n3000-init-{{plugin_os}}:{{ contrail_version_tag }}"
     network_mode: host
     privileged: true
     env_file: /etc/contrail/common_vrouter.env
@@ -109,7 +109,7 @@ services:
       - node-init
 {% endif %}
   vrouter-agent-dpdk:
-    image: "{{ container_registry }}/contrail-vrouter-agent-dpdk:{{ contrail_version_tag }}"
+    image: "{{ container_registry }}/opensdn-vrouter-agent-dpdk:{{ contrail_version_tag }}"
     network_mode: host
     privileged: true
     env_file: /etc/contrail/common_vrouter.env
@@ -140,7 +140,7 @@ services:
         max-size: "{{ compute_log_max_size }}"
         max-file: "{{ compute_log_max_file }}"
   vrouter-agent:
-    image: "{{ container_registry }}/contrail-vrouter-agent:{{ contrail_version_tag }}"
+    image: "{{ container_registry }}/opensdn-vrouter-agent:{{ contrail_version_tag }}"
     network_mode: host
     privileged: true
     pid: host

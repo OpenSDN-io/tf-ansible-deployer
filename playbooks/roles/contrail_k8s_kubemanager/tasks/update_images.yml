@@ -4,7 +4,7 @@
   retries: 5
   until: res.rc == 0
   with_items:
-    - contrail-kubernetes-kube-manager
+    - opensdn-kubernetes-kube-manager
   when:
     - contrail_configuration.UPDATE_IMAGES is undefined or contrail_configuration.UPDATE_IMAGES != false
     - roles[instance_name].kubemanager is defined and k8s_master_ip is defined and k8s_master_name is defined

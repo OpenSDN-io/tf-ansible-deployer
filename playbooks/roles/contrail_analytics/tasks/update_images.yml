@@ -4,11 +4,11 @@
   retries: 5
   until: res.rc == 0
   with_items:
-    - contrail-node-init
-    - contrail-nodemgr
-    - contrail-analytics-api
-    - contrail-analytics-collector
-    - contrail-provisioner
+    - opensdn-node-init
+    - opensdn-nodemgr
+    - opensdn-analytics-api
+    - opensdn-analytics-collector
+    - opensdn-provisioner
   when:
     - contrail_configuration.UPDATE_IMAGES is undefined or contrail_configuration.UPDATE_IMAGES != false
     - roles[instance_name].analytics is defined

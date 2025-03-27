@@ -4,8 +4,8 @@
   retries: 5
   until: res.rc == 0
   with_items:
-    - contrail-node-init
-    - contrail-external-haproxy
+    - opensdn-node-init
+    - opensdn-external-haproxy
   when:
     - contrail_configuration.UPDATE_IMAGES is undefined or contrail_configuration.UPDATE_IMAGES != false
     - roles[instance_name].tsn_haproxy is defined

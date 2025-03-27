@@ -1,17 +1,17 @@
 version: '2.4'
 services:
   node-init:
-    image: "{{ container_registry }}/contrail-node-init:{{ contrail_version_tag }}"
+    image: "{{ container_registry }}/opensdn-node-init:{{ contrail_version_tag }}"
     env_file: /etc/contrail/common_kubemanager_{{ kube_cluster_name }}.env
     environment:
-      - CONTRAIL_STATUS_IMAGE="{{ container_registry }}/contrail-status:{{ contrail_version_tag }}"
+      - CONTRAIL_STATUS_IMAGE="{{ container_registry }}/opensdn-status:{{ contrail_version_tag }}"
     privileged: true
     pid: host
     network_mode: "host"
     volumes:
       {{ common_volumes | to_yaml | indent(width=6) }}
   kubemanager:
-    image: "{{ container_registry }}/contrail-kubernetes-kube-manager:{{ contrail_version_tag }}"
+    image: "{{ container_registry }}/opensdn-kubernetes-kube-manager:{{ contrail_version_tag }}"
     network_mode: host
     environment:
       - K8S_TOKEN={{ hostvars[k8s_master_name].kubemanagertoken }}

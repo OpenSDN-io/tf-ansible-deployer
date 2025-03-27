@@ -4,17 +4,17 @@ volumes:
  config_zookeeper:
 services:
   node-init:
-    image: "{{ container_registry }}/contrail-node-init:{{ contrail_version_tag }}"
+    image: "{{ container_registry }}/opensdn-node-init:{{ contrail_version_tag }}"
     env_file: /etc/contrail/common_config_database.env
     environment:
-      - CONTRAIL_STATUS_IMAGE="{{ container_registry }}/contrail-status:{{ contrail_version_tag }}"
+      - CONTRAIL_STATUS_IMAGE="{{ container_registry }}/opensdn-status:{{ contrail_version_tag }}"
     privileged: true
     pid: host
     network_mode: "host"
     volumes:
       {{ common_volumes | to_yaml | indent(width=6) }}
   nodemgr:
-    image: "{{ container_registry }}/contrail-nodemgr:{{ contrail_version_tag }}"
+    image: "{{ container_registry }}/opensdn-nodemgr:{{ contrail_version_tag }}"
     env_file: /etc/contrail/common_config_database.env
     environment:
       - NODE_TYPE=config-database
@@ -36,7 +36,7 @@ services:
         max-size: "{{ config_db_log_max_size }}"
         max-file: "{{ config_db_log_max_file }}"
   provisioner:
-    image: "{{ container_registry }}/contrail-provisioner:{{ contrail_version_tag }}"
+    image: "{{ container_registry }}/opensdn-provisioner:{{ contrail_version_tag }}"
     env_file:
       - /etc/contrail/common_config_database.env
       - /etc/contrail/defaults.env
@@ -56,7 +56,7 @@ services:
         max-size: "{{ config_db_log_max_size }}"
         max-file: "{{ config_db_log_max_file }}"
   cassandra:
-    image: "{{ container_registry }}/contrail-external-cassandra:{{ contrail_version_tag }}"
+    image: "{{ container_registry }}/opensdn-external-cassandra:{{ contrail_version_tag }}"
     env_file: /etc/contrail/common_config_database.env
     cap_add:
       - SYS_NICE
@@ -88,7 +88,7 @@ services:
         max-file: "{{ config_db_log_max_file }}"
     restart: always
   zookeeper:
-    image: "{{ container_registry }}/contrail-external-zookeeper:{{ contrail_version_tag }}"
+    image: "{{ container_registry }}/opensdn-external-zookeeper:{{ contrail_version_tag }}"
     env_file: /etc/contrail/common_config_database.env
     environment:
       - ZOOKEEPER_NODES={{ zookeeper_nodes }}
@@ -107,7 +107,7 @@ services:
     network_mode: "host"
     restart: always
   rabbitmq:
-    image: "{{ container_registry }}/contrail-external-rabbitmq:{{ contrail_version_tag }}"
+    image: "{{ container_registry }}/opensdn-external-rabbitmq:{{ contrail_version_tag }}"
     env_file: /etc/contrail/common_config_database.env
     environment:
       - RABBITMQ_NODES={{ rabbitmq_nodes }}

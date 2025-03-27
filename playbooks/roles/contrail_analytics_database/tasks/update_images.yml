@@ -4,11 +4,11 @@
   retries: 5
   until: res.rc == 0
   with_items:
-    - contrail-node-init
-    - contrail-nodemgr
-    - contrail-analytics-query-engine
-    - contrail-external-cassandra
-    - contrail-provisioner
+    - opensdn-node-init
+    - opensdn-nodemgr
+    - opensdn-analytics-query-engine
+    - opensdn-external-cassandra
+    - opensdn-provisioner
   when:
     - contrail_configuration.UPDATE_IMAGES is undefined or contrail_configuration.UPDATE_IMAGES != false
     - roles[instance_name].analytics_database is defined

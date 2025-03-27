@@ -4,10 +4,10 @@
   retries: 5
   until: res.rc == 0
   with_items:
-    - contrail-node-init
-    - contrail-nodemgr
-    - contrail-provisioner
-    - contrail-controller-control-control
+    - opensdn-node-init
+    - opensdn-nodemgr
+    - opensdn-provisioner
+    - opensdn-controller-control-control
   when:
     - contrail_configuration.UPDATE_IMAGES is undefined or contrail_configuration.UPDATE_IMAGES != false
     - roles[instance_name].control_only is defined

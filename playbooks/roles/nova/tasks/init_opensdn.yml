@@ -8,7 +8,7 @@
 - name: Copy nova plugin to shared volume
   docker_container:
        name: contrail-openstack-compute-init
-       image: "{{ container_registry }}/contrail-openstack-compute-init:{{ contrail_version_tag }}"
+       image: "{{ container_registry }}/opensdn-openstack-compute-init:{{ contrail_version_tag }}"
        volumes:
          - "opensdn:/opt/plugin/"
        env:

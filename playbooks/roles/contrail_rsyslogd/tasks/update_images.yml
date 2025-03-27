@@ -4,7 +4,7 @@
   retries: 5
   until: res.rc == 0
   with_items:
-    - contrail-external-rsyslogd
+    - opensdn-external-rsyslogd
   when:
     - contrail_configuration.UPDATE_IMAGES is undefined or contrail_configuration.UPDATE_IMAGES != false
     - roles[instance_name].vrouter is defined and ansible_system == 'Linux'

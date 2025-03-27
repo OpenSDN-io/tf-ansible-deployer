@@ -3,17 +3,17 @@ volumes:
   contrail_control_dns:
 services:
   node-init:
-    image: "{{ container_registry }}/contrail-node-init:{{ contrail_version_tag }}"
+    image: "{{ container_registry }}/opensdn-node-init:{{ contrail_version_tag }}"
     env_file: /etc/contrail/common_control.env
     environment:
-      - CONTRAIL_STATUS_IMAGE="{{ container_registry }}/contrail-status:{{ contrail_version_tag }}"
+      - CONTRAIL_STATUS_IMAGE="{{ container_registry }}/opensdn-status:{{ contrail_version_tag }}"
     privileged: true
     pid: host
     network_mode: "host"
     volumes:
       {{ common_volumes | to_yaml | indent(width=6) }}
   nodemgr:
-    image: "{{ container_registry }}/contrail-nodemgr:{{ contrail_version_tag }}"
+    image: "{{ container_registry }}/opensdn-nodemgr:{{ contrail_version_tag }}"
     env_file: /etc/contrail/common_control.env
     environment:
       - NODE_TYPE=control
@@ -33,7 +33,7 @@ services:
         max-size: "{{ control_log_max_size }}"
         max-file: "{{ control_log_max_file }}"
   provisioner:
-    image: "{{ container_registry }}/contrail-provisioner:{{ contrail_version_tag }}"
+    image: "{{ container_registry }}/opensdn-provisioner:{{ contrail_version_tag }}"
     env_file: 
       - /etc/contrail/common_control.env
       - /etc/contrail/defaults.env
@@ -53,7 +53,7 @@ services:
         max-size: "{{ control_log_max_size }}"
         max-file: "{{ control_log_max_file }}"
   control:
-    image: "{{ container_registry }}/contrail-controller-control-control:{{ contrail_version_tag }}"
+    image: "{{ container_registry }}/opensdn-controller-control-control:{{ contrail_version_tag }}"
     network_mode: "host"
     cap_add:
       - SYS_PTRACE
@@ -72,7 +72,7 @@ services:
         max-file: "{{ control_log_max_file }}"
 {% if roles[instance_name].control.location is undefined %}
   named:
-    image: "{{ container_registry }}/contrail-controller-control-named:{{ contrail_version_tag }}"
+    image: "{{ container_registry }}/opensdn-controller-control-named:{{ contrail_version_tag }}"
     network_mode: "host"
     env_file: /etc/contrail/common_control.env
     privileged: true
@@ -92,7 +92,7 @@ services:
         max-size: "{{ control_log_max_size }}"
         max-file: "{{ control_log_max_file }}"
   dns:
-    image: "{{ container_registry }}/contrail-controller-control-dns:{{ contrail_version_tag }}"
+    image: "{{ container_registry }}/opensdn-controller-control-dns:{{ contrail_version_tag }}"
     network_mode: "host"
     cap_add:
       - SYS_PTRACE

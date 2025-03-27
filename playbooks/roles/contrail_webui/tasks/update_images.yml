@@ -4,8 +4,8 @@
   retries: 5
   until: res.rc == 0
   with_items:
-    - contrail-controller-webui-web
-    - contrail-controller-webui-job
+    - opensdn-controller-webui-web
+    - opensdn-controller-webui-job
   when:
     - contrail_configuration.UPDATE_IMAGES is undefined or contrail_configuration.UPDATE_IMAGES != false
     - roles[instance_name].webui is defined

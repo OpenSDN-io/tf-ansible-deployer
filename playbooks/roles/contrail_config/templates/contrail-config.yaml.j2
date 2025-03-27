@@ -10,17 +10,17 @@ volumes:
   dhcp_leases:
 services:
   node-init:
-    image: "{{ container_registry }}/contrail-node-init:{{ contrail_version_tag }}"
+    image: "{{ container_registry }}/opensdn-node-init:{{ contrail_version_tag }}"
     env_file: /etc/contrail/common_config.env
     environment:
-      - CONTRAIL_STATUS_IMAGE="{{ container_registry }}/contrail-status:{{ contrail_version_tag }}"
+      - CONTRAIL_STATUS_IMAGE="{{ container_registry }}/opensdn-status:{{ contrail_version_tag }}"
     privileged: true
     pid: host
     network_mode: "host"
     volumes:
       {{ common_volumes | to_yaml | indent(width=6) }}
   nodemgr:
-    image: "{{ container_registry }}/contrail-nodemgr:{{ contrail_version_tag }}"
+    image: "{{ container_registry }}/opensdn-nodemgr:{{ contrail_version_tag }}"
     env_file: /etc/contrail/common_config.env
     environment:
       - NODE_TYPE=config
@@ -40,7 +40,7 @@ services:
         max-size: "{{ config_log_max_size }}"
         max-file: "{{ config_log_max_file }}"
   provisioner:
-    image: "{{ container_registry }}/contrail-provisioner:{{ contrail_version_tag }}"
+    image: "{{ container_registry }}/opensdn-provisioner:{{ contrail_version_tag }}"
     env_file:
       - /etc/contrail/common_config.env
       - /etc/contrail/defaults.env
@@ -60,7 +60,7 @@ services:
         max-size: "{{ config_log_max_size }}"
         max-file: "{{ config_log_max_file }}"
   api:
-    image: "{{ container_registry }}/contrail-controller-config-api:{{ contrail_version_tag }}"
+    image: "{{ container_registry }}/opensdn-controller-config-api:{{ contrail_version_tag }}"
     env_file: /etc/contrail/common_config.env
     network_mode: "host"
     volumes_from:
@@ -76,7 +76,7 @@ services:
         max-size: "{{ config_log_max_size }}"
         max-file: "{{ config_log_max_file }}"
   svcmonitor:
-    image: "{{ container_registry }}/contrail-controller-config-svcmonitor:{{ contrail_version_tag }}"
+    image: "{{ container_registry }}/opensdn-controller-config-svcmonitor:{{ contrail_version_tag }}"
     network_mode: "host"
     env_file: /etc/contrail/common_config.env
     volumes_from:
@@ -92,7 +92,7 @@ services:
         max-size: "{{ config_log_max_size }}"
         max-file: "{{ config_log_max_file }}"
   schema:
-    image: "{{ container_registry }}/contrail-controller-config-schema:{{ contrail_version_tag }}"
+    image: "{{ container_registry }}/opensdn-controller-config-schema:{{ contrail_version_tag }}"
     network_mode: "host"
     env_file: /etc/contrail/common_config.env
     volumes_from:
@@ -108,7 +108,7 @@ services:
         max-size: "{{ config_log_max_size }}"
         max-file: "{{ config_log_max_file }}"
   devicemgr:
-    image: "{{ container_registry }}/contrail-controller-config-devicemgr:{{ contrail_version_tag }}"
+    image: "{{ container_registry }}/opensdn-controller-config-devicemgr:{{ contrail_version_tag }}"
     network_mode: "host"
     env_file: /etc/contrail/common_config.env
     volumes_from:
@@ -128,7 +128,7 @@ services:
         max-size: "{{ config_log_max_size }}"
         max-file: "{{ config_log_max_file }}"
   dnsmasq:
-    image: "{{ container_registry }}/contrail-controller-config-dnsmasq:{{ contrail_version_tag }}"
+    image: "{{ container_registry }}/opensdn-controller-config-dnsmasq:{{ contrail_version_tag }}"
     network_mode: "host"
     cap_add:
       - NET_ADMIN
