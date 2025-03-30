@@ -1,13 +1,13 @@
 ---
 - name: Remove init container
   docker_container:
-       name: contrail-openstack-neutron-init
+       name: opensdn-openstack-neutron-init
        state: absent
   ignore_errors: true
 
 - name: Copy neutron plugin to shared volume
   docker_container:
-       name: contrail-openstack-neutron-init
+       name: opensdn-openstack-neutron-init
        image: "{{ container_registry }}/opensdn-openstack-neutron-init:{{ contrail_version_tag }}"
        volumes:
          - "opensdn:/opt/plugin/"

@@ -14,7 +14,7 @@
         global_configuration: "{{ global_configuration | default({}) }}"
       when: hostvars['localhost']['global_configuration'] is undefined
   roles:
-    - contrail_deployer
+    - opensdn_deployer
     - openstack_deployer
   vars_files:
     - "{{ config_file }}"

@@ -21,7 +21,7 @@
 
 - name: create redis
   include_role:
-    name: contrail_redis
+    name: opensdn_redis
     tasks_from: "{{ item }}"
   with_items:
     - update_images
@@ -33,7 +33,7 @@
 
 - name: create contrail config database
   include_role:
-    name: contrail_config_database
+    name: opensdn_config_database
     tasks_from: "{{ item }}"
   with_items:
     - update_images
@@ -44,7 +44,7 @@
 
 - name: create contrail config
   include_role:
-    name: contrail_config
+    name: opensdn_config
     tasks_from: "{{ item }}"
   with_items:
     - update_images
@@ -55,7 +55,7 @@
 
 - name: create contrail webui
   include_role:
-    name: contrail_webui
+    name: opensdn_webui
     tasks_from: "{{ item }}"
   with_items:
     - update_images
@@ -66,7 +66,7 @@
 
 - name: create contrail control
   include_role:
-    name: contrail_control
+    name: opensdn_control
     tasks_from: "{{ item }}"
   with_items:
     - update_images
@@ -77,7 +77,7 @@
 
 - name: create contrail control_only
   include_role:
-    name: contrail_control_only
+    name: opensdn_control_only
     tasks_from: "{{ item }}"
   with_items:
     - update_images
@@ -88,7 +88,7 @@
 
 - name: create contrail analytics database
   include_role:
-    name: contrail_analytics_database
+    name: opensdn_analytics_database
     tasks_from: "{{ item }}"
   with_items:
     - update_images
@@ -99,7 +99,7 @@
 
 - name: create contrail analytics
   include_role:
-    name: contrail_analytics
+    name: opensdn_analytics
     tasks_from: "{{ item }}"
   with_items:
     - update_images
@@ -110,7 +110,7 @@
 
 - name: create contrail analytics alarm
   include_role:
-    name: contrail_analytics_alarm
+    name: opensdn_analytics_alarm
     tasks_from: "{{ item }}"
   with_items:
     - update_images
@@ -123,7 +123,7 @@
 
 - name: create contrail analytics snmp
   include_role:
-    name: contrail_analytics_snmp
+    name: opensdn_analytics_snmp
     tasks_from: "{{ item }}"
   with_items:
     - update_images
@@ -136,7 +136,7 @@
 
 - name: create k8s cni
   include_role:
-    name: contrail_k8s_cni
+    name: opensdn_k8s_cni
     tasks_from: "{{ item }}"
   with_items:
     - update_images
@@ -147,14 +147,14 @@
 
 - name: configure k8s for Contrail
   include_role:
-    name: contrail_k8s_master
+    name: opensdn_k8s_master
   when: roles[instance_name].k8s_master is defined and k8s_master_name is defined and inventory_hostname == k8s_master_name
   tags:
     - k8s
 
 - name: create contrail kube manager
   include_role:
-    name: contrail_k8s_kubemanager
+    name: opensdn_k8s_kubemanager
     tasks_from: "{{ item }}"
   with_items:
     - update_images
@@ -165,7 +165,7 @@
 
 - name: create contrail rsyslogd for Linux
   include_role:
-    name: contrail_rsyslogd
+    name: opensdn_rsyslogd
     tasks_from: "{{ item }}"
   with_items:
     - update_images
@@ -177,7 +177,7 @@
 
 - name: create contrail vrouter for Linux
   include_role:
-    name: contrail_vrouter
+    name: opensdn_vrouter
     tasks_from: "{{ item }}"
   with_items:
     - update_images
@@ -188,7 +188,7 @@
 
 - name: create contrail tor agents
   include_role:
-    name: contrail_toragent
+    name: opensdn_toragent
     tasks_from: "{{ item }}"
   with_items:
     - update_images
@@ -197,7 +197,7 @@
 
 - name: Pluginize legacy compute
   include_role:
-    name: contrail_compute_legacy
+    name: opensdn_compute_legacy
     tasks_from: "{{ item }}"
   with_items:
     - update_images

@@ -22,7 +22,7 @@
         when: hostvars['localhost']['provider_config'] is undefined
     roles:
       - pip
-      - contrail_deployer
+      - opensdn_deployer
       - { role: kolla_deployer, when: contrail_configuration.CLOUD_ORCHESTRATOR == 'openstack' }
       - k8s_deployer
     vars_files:
@@ -60,51 +60,51 @@
           dir: "{{ playbook_dir }}/roles/contrail/defaults"
           extensions: ['yml']
       - include_role:
-          name: contrail_config
+          name: opensdn_config
           tasks_from: update_images
         when: roles[instance_name].config is defined
       - include_role:
-          name: contrail_webui
+          name: opensdn_webui
           tasks_from: update_images
         when: roles[instance_name].webui is defined
       - include_role:
-          name: contrail_redis
+          name: opensdn_redis
           tasks_from: update_images
         when: roles[instance_name].webui is defined or roles[instance_name].analytics is defined
       - include_role:
-          name: contrail_analytics
+          name: opensdn_analytics
           tasks_from: update_images
         when: roles[instance_name].analytics is defined
       - include_role:
-          name: contrail_analytics_alarm
+          name: opensdn_analytics_alarm
           tasks_from: update_images
         when: roles[instance_name].analytics_alarm is defined
       - include_role:
-          name: contrail_analytics_snmp
+          name: opensdn_analytics_snmp
           tasks_from: update_images
         when: roles[instance_name].analytics_snmp is defined
       - include_role:
-          name: contrail_config
+          name: opensdn_config
           tasks_from: stop
         when: roles[instance_name].config is defined
       - include_role:
-          name: contrail_webui
+          name: opensdn_webui
           tasks_from: stop
         when: roles[instance_name].webui is defined
       - include_role:
-          name: contrail_redis
+          name: opensdn_redis
           tasks_from: stop
         when: roles[instance_name].webui is defined or roles[instance_name].analytics is defined
       - include_role:
-          name: contrail_analytics
+          name: opensdn_analytics
           tasks_from: stop
         when: roles[instance_name].analytics is defined
       - include_role:
-          name: contrail_analytics_alarm
+          name: opensdn_analytics_alarm
           tasks_from: stop
         when: roles[instance_name].analytics_alarm is defined
       - include_role:
-          name: contrail_analytics_snmp
+          name: opensdn_analytics_snmp
           tasks_from: stop
         when: roles[instance_name].analytics_snmp is defined
     vars_files:
@@ -118,22 +118,22 @@
           name: contrail
           tasks_from: "common_{{ ansible_system }}"
       - include_role:
-          name: contrail_config
+          name: opensdn_config
         when: roles[instance_name].config is defined
       - include_role:
-          name: contrail_webui
+          name: opensdn_webui
         when: roles[instance_name].webui is defined
       - include_role:
-          name: contrail_redis
+          name: opensdn_redis
         when: roles[instance_name].webui is defined or roles[instance_name].analytics is defined
       - include_role:
-          name: contrail_analytics
+          name: opensdn_analytics
         when: roles[instance_name].analytics is defined
       - include_role:
-          name: contrail_analytics_alarm
+          name: opensdn_analytics_alarm
         when: roles[instance_name].analytics_alarm is defined
       - include_role:
-          name: contrail_analytics_snmp
+          name: opensdn_analytics_snmp
         when: roles[instance_name].analytics_snmp is defined
     vars_files:
       - "{{ hostvars['localhost'].config_file }}"
@@ -144,26 +144,26 @@
     gather_facts: yes
     tasks:
       - include_role:
-          name: contrail_control
+          name: opensdn_control
           tasks_from: update_images
         when: roles[instance_name].control is defined
       - include_role:
-          name: contrail_control_only
+          name: opensdn_control_only
           tasks_from: update_images
         when: roles[instance_name].control_only is defined
       - include_role:
-          name: contrail_control
+          name: opensdn_control
           tasks_from: stop
         when: roles[instance_name].control is defined
       - include_role:
-          name: contrail_control_only
+          name: opensdn_control_only
           tasks_from: stop
         when: roles[instance_name].control_only is defined
       - include_role:
-          name: contrail_control
+          name: opensdn_control
         when: roles[instance_name].control is defined
       - include_role:
-          name: contrail_control_only
+          name: opensdn_control_only
         when: roles[instance_name].control_only is defined
     vars_files:
       - "{{ hostvars['localhost'].config_file }}"
@@ -174,26 +174,26 @@
     serial: 1
     tasks:
       - include_role:
-          name: contrail_config_database
+          name: opensdn_config_database
           tasks_from: update_images
         when: roles[instance_name].config_database is defined
       - include_role:
-          name: contrail_config_database
+          name: opensdn_config_database
           tasks_from: stop
         when: roles[instance_name].config_database is defined
       - include_role:
-          name: contrail_config_database
+          name: opensdn_config_database
         when: roles[instance_name].config_database is defined
       - include_role:
-          name: contrail_analytics_database
+          name: opensdn_analytics_database
           tasks_from: update_images
         when: roles[instance_name].analytics_database is defined
       - include_role:
-          name: contrail_analytics_database
+          name: opensdn_analytics_database
           tasks_from: stop
         when: roles[instance_name].analytics_database is defined
       - include_role:
-          name: contrail_analytics_database
+          name: opensdn_analytics_database
         when: roles[instance_name].analytics_database is defined
     vars_files:
       - "{{ hostvars['localhost'].config_file }}"

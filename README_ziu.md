@@ -9,7 +9,7 @@ sudo -E ansible-playbook -v -e stage=controller -e orchestrator=openstack -e con
 ```sh
 sudo -E ansible-playbook -v -e stage=openstack -e orchestrator=openstack -e config_file=../instances.yaml playbooks/ziu.yml
 ```
-4. Run contrail-status to check all works well
+4. Run opensdn-status to check all works well
 5. Migrate workloads VM from one group of compute nodes. Leave them uncommented in the instances.yaml. Comment other computes not ready to upgrаde in instances.yaml.
 6. Run `compute` stage of `ziu.yml` playbook to upgrade compute nodes (group that uncommented in instances.yml).
 ```sh

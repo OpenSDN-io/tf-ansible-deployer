@@ -1,10 +1,10 @@
-# contrail-container-deployer
+# container-deployer
 
-This set of playbooks installs Contrail Networking using a microservices architecture.
+This set of playbooks installs OpenSDN Networking using a microservices architecture.
 
 # quick start for the impatient (requires a CentOS7 instance)...
 
-This set of commands will configure the instance and install AIO contrail with k8s on the instance:
+This set of commands will configure the instance and install AIO opensdn with k8s on the instance:
 ```
 ssh-copy-id 192.168.1.100
 #following can be used to install pip on system, if not installed already
@@ -16,7 +16,7 @@ pip install ansible==2.7.18
 git clone http://github.com/opensdn-io/tf-ansible-deployer
 cd tf-ansible-deployer
 ansible-playbook -i inventory/ -e orchestrator=kubernetes -e '{"instances":{"bms1":{"ip":"192.168.1.100","provider":"bms"}}}' playbooks/configure_instances.yml
-ansible-playbook -i inventory/ -e orchestrator=kubernetes -e '{"instances":{"bms1":{"ip":"192.168.1.100","provider":"bms"}}}' playbooks/install_contrail.yml
+ansible-playbook -i inventory/ -e orchestrator=kubernetes -e '{"instances":{"bms1":{"ip":"192.168.1.100","provider":"bms"}}}' playbooks/opensdn.yml
 ansible-playbook -i inventory/ -e orchestrator=kubernetes -e '{"instances":{"bms1":{"ip":"192.168.1.100","provider":"bms"}}}' playbooks/install_k8s.yml
 ```
 The ip address 192.168.1.100 has to be replaced with the instances ip address
@@ -88,7 +88,7 @@ Please note that the below components in analytics are optional
   zookeeper
 ```
 
-Please check [Optional Contrail Analytics Components](https://github.com/opensdn-io/tf-ansible-deployer/blob/master/README.md#optional-contrail-analytics-components
+Please check [Optional Analytics Components](https://github.com/opensdn-io/tf-ansible-deployer/blob/master/README.md#optional-analytics-components
 
 ## Prerequisites
 

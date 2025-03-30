@@ -1,8 +1,8 @@
 # orchestrator MUST be passed as a command line argument like so:
 #
-# ansible-playbook -i inventory/ -e orchestrator=openstack playbook/install_contrail.yml
+# ansible-playbook -i inventory/ -e orchestrator=openstack playbook/install_opensdn.yml
 #
-- name: Create container host group and evaluate variables for Contrail
+- name: Create container host group and evaluate variables for opensdn
   hosts: localhost
   connection: local
   gather_facts: yes
@@ -24,7 +24,7 @@
           provider_config: "{{ provider_config | default({}) }}"
       when: hostvars['localhost']['provider_config'] is undefined
   roles:
-    - contrail_deployer
+    - opensdn_deployer
     - k8s_deployer
   vars_files:
     - "{{ config_file }}"
@@ -32,12 +32,12 @@
   environment:
     - "{{ contrail_ansible_environment | default({})}}"
 
-- name: Remove Contrail from Deleted Nodes ( Deregister )
+- name: Remove opensdn from Deleted Nodes ( Deregister )
   hosts: container_hosts
   gather_facts: yes
   tasks:
   - include_role:
-      name: contrail
+      name: opensdn
       tasks_from: deregister
     vars:
       - contrail_configuration: "{{ hostvars['localhost'].contrail_configuration }}"
@@ -51,11 +51,11 @@
   environment:
     - "{{ contrail_ansible_environment | default({})}}"
 
-- name: Remove Contrail from Deleted Nodes ( Cleanup )
+- name: Remove opensdn from Deleted Nodes ( Cleanup )
   hosts:  "{{ hostvars['localhost'].deleted_nodes_dict.values() }}"
   tasks:
   - include_role:
-      name: contrail
+      name: opensdn
       tasks_from: delete
     vars:
       - contrail_configuration: "{{ hostvars['localhost'].contrail_configuration }}"
@@ -85,7 +85,7 @@
   environment:
     - "{{ contrail_ansible_environment | default({})}}"
 
-- name: Install Contrail
+- name: Install opensdn
   hosts: container_hosts
   gather_facts: yes
   pre_tasks:
@@ -98,7 +98,7 @@
           k8s_master_name: "{{ hostvars['localhost'].k8s_master_name }}"
       when: hostvars['localhost'].k8s_master_name is defined
   roles:
-    - contrail
+    - opensdn
   vars:
     - default_configuration: "{{ hostvars['localhost'].default_configuration }}"
     - provider_config: "{{ hostvars['localhost']['provider_config'] }}"
