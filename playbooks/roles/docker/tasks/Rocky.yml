@@ -4,7 +4,28 @@
 
 - name: install docker
   dnf:
-    name: docker-ce-3:25.0.3-1.el9.x86_64
+    name:
+      - docker-ce-3:25.0.3-1.el9.x86_64
+  register: res
+  retries: 5
+  until: res is success
+
+- name:
+  package:
+    name: python3-yaml
+    state: absent
+
+# pin requests lib due to "urllib3 v2 incompatibility"
+# https://github.com/docker/docker-py/issues/3113
+# extra_args - to avoid error during install pyyaml on modern ubuntu(22.04)
+- name: install wheel
+  shell: python3 -m pip install --no-build-isolation wheel
+  register: res
+  retries: 5
+  until: res is success
+
+- name: install python compose
+  shell: python3 -m pip install --no-build-isolation 'docker-compose==1.28.6' 'requests<2.29'
   register: res
   retries: 5
   until: res is success
