@@ -72,12 +72,12 @@
 
 - name: set vrouter kernel init image name
   set_fact:
-    vrouter_kernel_init_img_name: contrail-vrouter-kernel-build-init
+    vrouter_kernel_init_img_name: opensdn-vrouter-kernel-build-init
   when: ansible_os_family == 'Debian'
 
 - name: set vrouter kernel init image name
   set_fact:
-    vrouter_kernel_init_img_name: contrail-vrouter-kernel-init
+    vrouter_kernel_init_img_name: opensdn-vrouter-kernel-init
   when: ansible_os_family == 'RedHat' or ansible_os_family == 'Rocky'
 
 - name: stop agent and remove old vrouter if kernel-init version changed
