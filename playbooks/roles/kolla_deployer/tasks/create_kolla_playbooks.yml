@@ -89,15 +89,6 @@
   when:
     - ansible_os_family == 'RedHat' or ansible_os_family == 'Rocky'
 
-- name: install python compose
-  pip:
-    name: "docker<7"
-  register: res
-  retries: 5
-  until: res is success
-  environment:
-    PIP_BREAK_SYSTEM_PACKAGES: 1
-
 - name: install kolla requirements
   pip:
     requirements: "{{ kolla_dir }}/requirements.txt"
