@@ -43,7 +43,7 @@
 
 - name: "Set variables for reaper tool"
   set_fact:
-    reaper_enabled: contrail_configuration.CASSANDRA_REAPER_ENABLED | default(true)
+    reaper_enabled: contrail_configuration.CASSANDRA_REAPER_ENABLED | default(false)
 
 - name: "get /etc/contrail/common_config_database.env stat"
   stat:
