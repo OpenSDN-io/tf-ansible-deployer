@@ -29,3 +29,13 @@
   register: res
   retries: 5
   until: res is success
+
+# we mount /etc/timezone from host to containers
+# but rocky9 doesn't have such file on host and with some mount it creates folder
+# and we have debian based images (like rabbit) which have this file inside
+# therefore we get an error during run with mount folder into file
+# so let's create file with system content
+- name: create file /etc/timezone with system value
+  copy:
+    content: "{{ ansible_date_time.tz }}"
+    dest: "/etc/timezone"
