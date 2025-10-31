@@ -1,7 +1,7 @@
 ---
 - name: deregister contrail toragent - Linux
   include_role:
-    name: contrail_toragent
+    name: opensdn_toragent
     tasks_from: deregister
   vars:
     - toragent_config: "{{ toragent_dict }}"
@@ -15,7 +15,7 @@
 
 - name: deregister contrail vrouter - Linux
   include_role:
-    name: contrail_vrouter
+    name: opensdn_vrouter
     tasks_from: deregister
   vars:
     - delted_nodes_dict: "{{ deleted_nodes_dict }}"
