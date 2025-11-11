@@ -54,7 +54,8 @@
 - name: install docker for other ubuntu
   apt:
     name:
-      - docker-ce
+      - "docker-ce=5:28.5.2-1~ubuntu.{{ ansible_distribution_major_version }}.04~{{ ansible_distribution_release }}"
+      - "docker-ce-cli=5:28.5.2-1~ubuntu.{{ ansible_distribution_major_version }}.04~{{ ansible_distribution_release }}"
       - docker-compose
       - docker-compose-plugin
       - python3-requests
