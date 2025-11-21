@@ -57,7 +57,7 @@
           api_server: "{{ hostvars['localhost'].api_server }}"
           deleted_nodes_dict: "{{ hostvars['localhost'].deleted_nodes_dict }}"
       - include_vars:
-          dir: "{{ playbook_dir }}/roles/contrail/defaults"
+          dir: "{{ playbook_dir }}/roles/opensdn/defaults"
           extensions: ['yml']
       - include_role:
           name: opensdn_config

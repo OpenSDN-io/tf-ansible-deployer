@@ -77,7 +77,7 @@
     gather_facts: yes
     tasks:
       - include_vars:
-          dir: "{{ playbook_dir }}/roles/contrail/defaults"
+          dir: "{{ playbook_dir }}/roles/opensdn/defaults"
           extensions: ['yml']
       - include_role:
           name: opensdn_vrouter
