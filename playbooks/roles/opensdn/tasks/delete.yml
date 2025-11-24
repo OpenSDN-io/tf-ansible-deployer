@@ -1,7 +1,7 @@
 ---
 - name: delete contrail toragent
   include_role:
-    name: contrail_toragent
+    name: opensdn_toragent
     tasks_from: delete
   vars:
     - toragent_config: "{{ toragent_dict }}"
@@ -15,7 +15,7 @@
 
 - name: delete contrail vrouter
   include_role:
-    name: contrail_vrouter
+    name: opensdn_vrouter
     tasks_from: delete
   when:
     - instance_name in node_roles_dict

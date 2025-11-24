@@ -115,7 +115,7 @@
     gather_facts: yes
     tasks:
       - include_role:
-          name: contrail
+          name: opensdn
           tasks_from: "common_{{ ansible_system }}"
       - include_role:
           name: opensdn_config
