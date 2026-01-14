@@ -51,16 +51,19 @@
   retries: 5
   until: res is success
 
+# docker-ce-cli must be installed before docker-ce, and install_recommends must be set to no
+# to prevent docker-compose from upgrading Docker packages to v29
 - name: install docker for other ubuntu
   apt:
     name:
-      - "docker-ce=5:28.5.2-1~ubuntu.{{ ansible_distribution_major_version }}.04~{{ ansible_distribution_release }}"
       - "docker-ce-cli=5:28.5.2-1~ubuntu.{{ ansible_distribution_major_version }}.04~{{ ansible_distribution_release }}"
+      - "docker-ce=5:28.5.2-1~ubuntu.{{ ansible_distribution_major_version }}.04~{{ ansible_distribution_release }}"
       - docker-compose
       - docker-compose-plugin
       - python3-requests
     state: present
     update_cache: yes
+    install_recommends: no
   when: ansible_distribution_major_version|int != 20 and ansible_distribution_major_version|int != 18
   register: res
   retries: 5
