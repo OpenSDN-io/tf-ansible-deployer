@@ -1,4 +1,9 @@
 ---
+- name: set upgrade kernel flag
+  set_fact:
+    upgrade_kernel_wanted: "{{ (contrail_configuration.UPGRADE_KERNEL is defined and contrail_configuration.UPGRADE_KERNEL == true) or (instance_data.UPGRADE_KERNEL is defined and instance_data.UPGRADE_KERNEL == true) }}"
+
+# 1. upgrade kernel (if needed, no reboot yet)
 - name: set new kernel version tag <global>
   set_fact:
     kernel_version_tag: "{{ contrail_configuration.KERNEL_VERSION }}"
@@ -15,9 +20,95 @@
     name: "{{ ('kernel-' + kernel_version_tag) if kernel_version_tag is defined else 'kernel'}}"
     state: latest
   register: upgrade_kernel
-  when: (contrail_configuration.UPGRADE_KERNEL is defined and contrail_configuration.UPGRADE_KERNEL == true) or
-        (instance_data.UPGRADE_KERNEL is defined and instance_data.UPGRADE_KERNEL == true)
+  when: upgrade_kernel_wanted
 
+# 2. determine version: always from /lib/modules (newest installed = target kernel)
+- name: get kernel version from /lib/modules
+  shell: ls /lib/modules/ | sort -V | tail -1
+  register: kernel_version_out
+
+# extract el9_5 from kver (e.g. 5.14.0-503.14.1.el9_5.x86_64) -> 9.5 for vault path
+- name: set kernel-devel kver and rocky_rver
+  set_fact:
+    kernel_devel_kver: "{{ kernel_version_out.stdout }}"
+    rocky_rver: "{{ kernel_version_out.stdout | regex_replace('.*\\.el([0-9]+)_([0-9]+)\\..*', '\\1.\\2') }}"
+  when:
+    - kernel_version_out.stdout is defined
+    - kernel_version_out.stdout | length > 0
+
+# single check: fail early if we did not get required values
+- name: ensure kernel version obtained
+  fail:
+    msg: "Failed to get kernel version from /lib/modules"
+  when: (kernel_devel_kver | default('')) | length == 0
+
+- name: ensure rocky version for el9 (expected el9_X format)
+  fail:
+    msg: "Could not parse rocky version from kernel {{ kernel_devel_kver }} (expected el9_X format, e.g. el9_5)"
+  when:
+    - ansible_distribution_major_version|int >= 9
+    - (rocky_rver | default('')) | length == 0
+
+# el9: kernel-devel from vault uses mapping (versions guaranteed available), not necessarily matching running kernel
+- name: set kernel-devel target kver from mapping (el9)
+  set_fact:
+    kernel_devel_target_kver: "{{ {
+      '9.0': '5.14.0-70.30.1.el9_0.x86_64',
+      '9.1': '5.14.0-162.23.1.el9_1.x86_64',
+      '9.2': '5.14.0-284.30.1.el9_2.x86_64',
+      '9.3': '5.14.0-362.13.1.el9_3.x86_64',
+      '9.4': '5.14.0-427.42.1.el9_4.x86_64',
+      '9.5': '5.14.0-503.14.1.el9_5.x86_64',
+      '9.6': '5.14.0-570.58.1.el9_6.x86_64'
+    }[rocky_rver] }}"
+  when: ansible_distribution_major_version|int >= 9
+
+- name: ensure kernel-devel mapping exists for rocky {{ rocky_rver }}
+  fail:
+    msg: "No kernel-devel mapping for Rocky {{ rocky_rver }} (supported: 9.0-9.6)"
+  when:
+    - ansible_distribution_major_version|int >= 9
+    - (kernel_devel_target_kver | default('')) | length == 0
+
+# 3. install kernel-devel (after the above checks, kernel_devel_kver and rocky_rver are defined)
+# RHEL<9 : from repos
+- name: install kernel-devel from repos
+  dnf:
+    name: "kernel-devel-{{ kernel_devel_kver }}"
+    state: present
+  when: ansible_distribution_major_version|int < 9
+
+# el9: from vault (use target from mapping, not running kernel)
+- name: download kernel-devel rpm
+  get_url:
+    url: "{{ global_configuration.SITE_MIRROR | default('https://dl.rockylinux.org') }}/vault/rocky/{{ rocky_rver }}/AppStream/x86_64/os/Packages/k/kernel-devel-{{ kernel_devel_target_kver }}.rpm"
+    dest: "/tmp/kernel-devel-{{ kernel_devel_target_kver }}.rpm"
+  when: ansible_distribution_major_version|int >= 9
+
+- name: install kernel-devel from rpm (el9)
+  dnf:
+    name: "/tmp/kernel-devel-{{ kernel_devel_target_kver }}.rpm"
+    state: present
+  when: ansible_distribution_major_version|int >= 9
+
+- name: remove kernel-devel rpm
+  file:
+    path: "/tmp/kernel-devel-{{ kernel_devel_target_kver }}.rpm"
+    state: absent
+  when: ansible_distribution_major_version|int >= 9
+
+# if running kernel != mapping, symlink /usr/src/kernels/$kernel_devel_kver -> $kernel_devel_target_kver
+- name: create kernel-devel symlink when versions differ (el9)
+  file:
+    path: "/usr/src/kernels/{{ kernel_devel_kver }}"
+    src: "{{ kernel_devel_target_kver }}"
+    state: link
+    force: true
+  when:
+    - ansible_distribution_major_version|int >= 9
+    - kernel_devel_kver != kernel_devel_target_kver
+
+# grub, reboot (at the end)
 - name: set default grub file
   set_fact:
     default_grub_config: "/etc/default/grub"
