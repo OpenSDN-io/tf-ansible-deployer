@@ -1,6 +1,6 @@
 ---
 
-default_openstack_version: yoga
+default_openstack_version: 2024.2
 openstack_version: >-
     {%- if contrail_configuration.OPENSTACK_VERSION is defined -%}
       {{ contrail_configuration.OPENSTACK_VERSION }}

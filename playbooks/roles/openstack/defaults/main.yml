@@ -13,7 +13,7 @@ inventory_name: "my_inventory"
 kolla_passwd: "{{ kolla_config.get('kolla_passwords', {}) }}"
 gen_passwords: yes
 
-default_openstack_sku: "yoga"
+default_openstack_sku: "2024.2"
 openstack_sku: >-
     {%- if contrail_configuration.OPENSTACK_VERSION is defined -%}
       {{ contrail_configuration.OPENSTACK_VERSION }}
@@ -26,6 +26,7 @@ openstack_sku: >-
 default_kolla_globals:
   haproxy_client_timeout: 30m
   haproxy_server_timeout: 30m
+  enable_proxysql: "no"
   # possible values:
   #   opencontrail      - for regular monolitic plugin
   #   opencontrail-ml2  - for ml2 plugin

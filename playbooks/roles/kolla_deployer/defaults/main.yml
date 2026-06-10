@@ -1,7 +1,7 @@
 ---
 
 kolla_config: {}
-default_openstack_sku: "yoga"
+default_openstack_sku: "2024.2"
 openstack_sku: >-
     {%- if contrail_configuration.OPENSTACK_VERSION is defined -%}
       {{ contrail_configuration.OPENSTACK_VERSION }}
