@@ -1,0 +1,10 @@
+---
+
+- name: Copy glance config script to all hosts
+  copy:
+    src: "{{ role_path }}/files/"
+    dest: "/tmp/"
+    mode: 0755
+
+- name: Execute glance config script
+  command: "/tmp/config_opensdn.sh"

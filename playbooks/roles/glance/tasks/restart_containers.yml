@@ -1,0 +1,8 @@
+---
+
+- name: restart glance_api container
+  shell: "sudo docker restart glance_api"
+  no_log: false
+  ignore_errors: true
+  args:
+    chdir: "{{ role_path }}"

@@ -4,7 +4,7 @@
 #python3 roles/neutron/files/render.py < roles/neutron/templates/ContrailPlugin.ini.j2 > roles/neutron/files/ContrailPlugin.ini
 sudo docker cp /tmp/ContrailPlugin.ini neutron_server:/etc/neutron/
 sudo docker cp /tmp/api-paste.ini neutron_server:/etc/neutron/
-sudo docker cp /tmp/contrail-plugin.pth neutron_server:/usr/lib/python3.6/site-packages/
+sudo docker cp /tmp/contrail-plugin.pth neutron_server:/usr/lib/python3.9/site-packages/
 
 #change configs in /etc/kolla
 if grep -q "command" /etc/kolla/neutron-server/config.json; then
@@ -58,6 +58,12 @@ fi
 if  !(grep -q "memcache_secret_key = contrail123" /etc/kolla/neutron-server/neutron.conf); then
     sed -i 's/memcache_secret_key =.*/memcache_secret_key = contrail123' /etc/kolla/neutron-server/neutron.conf
 fi
+
+echo \[oslo_policy]\ >> /etc/kolla/neutron-server/neutron.conf
+
+echo enforce_new_defaults = False >> /etc/kolla/neutron-server/neutron.conf
+
+echo enforce_scope = False >> /etc/kolla/neutron-server/neutron.conf
 
 echo \[quotas]\ >> /etc/kolla/neutron-server/neutron.conf
 
