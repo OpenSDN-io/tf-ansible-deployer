@@ -34,6 +34,9 @@
     - include_role:
         name: heat
       when: roles[instance_name].openstack is defined
+    - include_role:
+        name: glance
+      when: roles[instance_name].openstack is defined
   vars:
     container_registry: "{{ hostvars['localhost'].container_registry }}"
     contrail_version_tag: "{{ hostvars['localhost'].contrail_version_tag }}"

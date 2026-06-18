@@ -1,0 +1,7 @@
+---
+
+- name: config glance_api container
+  include_tasks: config_opensdn.yml
+
+- name: restart containers
+  include_tasks: restart_containers.yml
