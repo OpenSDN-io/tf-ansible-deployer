@@ -36,7 +36,7 @@ if  grep -q "interface_driver = openvswitch" /etc/kolla/neutron-server/neutron.c
 fi
 
 if  !(grep -q "service_plugins = contrail-tags" /etc/kolla/neutron-server/neutron.conf); then
-    sed -i 's/service_plugins =.*/service_plugins = contrail-tags,/' /etc/kolla/neutron-server/neutron.conf
+    sed -i 's/service_plugins =.*/service_plugins = contrail-tags,contrail-timestamp/' /etc/kolla/neutron-server/neutron.conf
 fi
 
 if  !(grep -q "api_extensions_path" /etc/kolla/neutron-server/neutron.conf); then
