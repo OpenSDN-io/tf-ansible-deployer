@@ -141,6 +141,7 @@ class FilterModule(object):
         "neutron-vpnaas-agent": ["neutron"],
         "neutron": ["network"],
         "nova-api": ["nova"],
+        "nova-metadata": ["nova"],
         "nova-compute-ironic": ["nova"],
         "nova-conductor": ["nova"],
         "nova-super-conductor": ["nova"],
