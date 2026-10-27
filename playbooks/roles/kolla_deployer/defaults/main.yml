@@ -20,6 +20,10 @@ kolla_vanilla_tags:
   "2023.2": "2023.2-eol"
   "2024.1": "2024.1-eom"
   "2024.2": "2024.2-eol"
+  "2025.1": "stable/2025.1"
+  "2025.2": "stable/2025.2"
+  "2026.1": "stable/2026.1"
+  "2026.2": "stable/2026.2"
 
 contrail_kolla_dir: "{{ playbook_dir }}/../../contrail-kolla-ansible"
 vanilla_kolla_dir: "{{ playbook_dir}}/../../kolla-ansible"
